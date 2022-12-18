@@ -1,7 +1,7 @@
 #####################
 # build the jar
 #####################
-FROM gradle:jdk15 as builder
+FROM arm64v8/gradle:jdk15 as builder
 COPY --chown=gradle:gradle application /application
 WORKDIR /application
 RUN gradle clean build jar
