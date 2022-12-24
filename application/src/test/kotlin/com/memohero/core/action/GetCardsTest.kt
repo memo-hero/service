@@ -14,7 +14,7 @@ class GetCardsTest {
 
     @Before
     fun setUp() {
-        whenever(mockedRepository.getByUserId(userId)).thenReturn(listOf(Card()))
+        whenever(mockedRepository.getByUserId(userId)).thenReturn(listOf(Card(userId)))
     }
 
     @Test

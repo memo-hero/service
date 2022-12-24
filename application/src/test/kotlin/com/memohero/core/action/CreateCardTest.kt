@@ -9,11 +9,12 @@ import org.mockito.kotlin.verify
 
 class CreateCardTest {
     private val mockedRepository: CardRepository = mock()
+    private val userId = "user id"
 
     @Test
     fun `should store new cards`() {
         val storeCard = StoreCard(mockedRepository)
-        val newCard = Card()
+        val newCard = Card(userId)
 
         storeCard(newCard)
 
