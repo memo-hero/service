@@ -1,5 +1,5 @@
 package com.memohero.core.domain.card
 
-class Card {
-
-}
+data class Card (
+    val userId: String
+)

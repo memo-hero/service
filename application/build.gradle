@@ -35,6 +35,8 @@ dependencies {
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-core-jvm:$ktor_version"
     implementation "io.ktor:ktor-client-apache:$ktor_version"
+    implementation "io.ktor:ktor-server-content-negotiation:$ktor_version"
+    implementation "io.ktor:ktor-serialization-jackson:$ktor_version"
     implementation 'junit:junit:4.13.1'
     implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
@@ -44,7 +46,6 @@ dependencies {
 }
 
 tasks.jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes["Main-Class"] = "com.memohero.service.MainKt"
 

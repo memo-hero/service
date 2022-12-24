@@ -4,11 +4,13 @@ import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardRepository
 
 class InMemoryCardRepository: CardRepository {
+    private val storedCards = mutableListOf<Card>()
+
     override fun add(card: Card) {
-        TODO("Not yet implemented")
+        storedCards.add(card)
     }
 
     override fun getByUserId(id: String): List<Card> {
-        TODO("Not yet implemented")
+        return storedCards.filter { card -> card.userId == id }
     }
 }
