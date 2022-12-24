@@ -47,7 +47,7 @@ dependencies {
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "com.memohero.service.MainKt"
+        attributes["Main-Class"] = "com.memohero.infrastructure.http.MainKt"
 
     }
     configurations["compileClasspath"].forEach {
