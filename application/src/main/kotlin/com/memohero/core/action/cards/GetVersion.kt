@@ -1,4 +1,4 @@
-package com.memohero.core.action
+package com.memohero.core.action.cards
 
 import java.util.*
 

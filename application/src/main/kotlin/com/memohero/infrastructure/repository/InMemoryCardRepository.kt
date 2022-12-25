@@ -1,4 +1,4 @@
-package com.memohero.core.infrastructure.repository
+package com.memohero.infrastructure.repository
 
 import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardRepository
