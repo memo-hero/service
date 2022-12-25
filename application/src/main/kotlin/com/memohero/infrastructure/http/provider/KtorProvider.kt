@@ -3,7 +3,7 @@ package com.memohero.infrastructure.http.provider;
 import com.memohero.core.action.cards.GetCards
 import com.memohero.core.action.cards.GetVersion
 import com.memohero.core.action.cards.StoreCard
-import com.memohero.core.domain.card.exceptions.InvalidParameterException
+import com.memohero.core.domain.exceptions.InvalidParameterException
 import com.memohero.infrastructure.http.Path
 import com.memohero.infrastructure.http.handler.CardJson
 import io.ktor.serialization.jackson.*

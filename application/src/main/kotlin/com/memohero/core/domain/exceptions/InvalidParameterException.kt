@@ -1,3 +1,3 @@
-package com.memohero.core.domain.card.exceptions
+package com.memohero.core.domain.exceptions
 
 class InvalidParameterException(override val message: String) : Throwable()

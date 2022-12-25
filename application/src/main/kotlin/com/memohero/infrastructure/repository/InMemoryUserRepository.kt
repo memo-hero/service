@@ -7,4 +7,8 @@ class InMemoryUserRepository: UserRepository {
     override fun storeUser(user: User) {
         TODO("Not yet implemented")
     }
+
+    override fun checkUserExists(user: User): Boolean {
+        TODO("Not yet implemented")
+    }
 }

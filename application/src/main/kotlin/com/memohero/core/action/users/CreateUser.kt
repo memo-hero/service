@@ -7,6 +7,7 @@ class CreateUser(
     private val userRepository: UserRepository
 ) {
     operator fun invoke(user: User) {
-        userRepository.storeUser(user)
+        if (!userRepository.checkUserExists(user))
+            userRepository.storeUser(user)
     }
 }
