@@ -4,7 +4,7 @@ import com.memohero.core.action.GetCards
 import com.memohero.core.action.GetVersion
 import com.memohero.core.action.StoreCard
 import com.memohero.core.domain.card.exceptions.InvalidParameterException
-import com.memohero.core.domain.card.exceptions.UserNotFoundException
+import com.memohero.infrastructure.http.Path
 import com.memohero.infrastructure.http.handler.CardJson
 import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
@@ -31,20 +31,20 @@ object KtorProvider {
     }
 
     private fun Route.getVersion(getVersionAction: GetVersion) {
-        get("/version") {
+        get(Path.GET_VERSION) {
             call.respond(getVersionAction())
         }
     }
 
     private fun Route.storeCard(storeCardAction: StoreCard) {
-        post("/card") {
+        post(Path.STORE_CARD) {
             val card =  call.receive<CardJson>()
             storeCardAction(card.toCard())
         }
     }
 
     private fun Route.getCards(getCardsAction: GetCards) {
-        get("/card") {
+        get(Path.GET_CARDS) {
             val userId = call.parameters["userId"] ?: throw InvalidParameterException("Missing parameter userId")
             call.respond(getCardsAction(userId))
         }
