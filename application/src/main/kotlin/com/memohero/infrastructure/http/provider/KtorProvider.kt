@@ -3,9 +3,11 @@ package com.memohero.infrastructure.http.provider;
 import com.memohero.core.action.cards.GetCards
 import com.memohero.core.action.cards.GetVersion
 import com.memohero.core.action.cards.StoreCard
+import com.memohero.core.action.users.CreateUser
 import com.memohero.core.domain.exceptions.InvalidParameterException
 import com.memohero.infrastructure.http.Path
 import com.memohero.infrastructure.http.handler.CardJson
+import com.memohero.infrastructure.http.handler.CreateUserJson
 import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -23,8 +25,11 @@ object KtorProvider {
             }
             routing {
                 getVersion(Actions.getVersion)
+
                 storeCard(Actions.storeCard)
                 getCards(Actions.getCards)
+
+                createUser(Actions.createUser)
             }
         }
         server.start(wait = true)
@@ -47,6 +52,13 @@ object KtorProvider {
         get(Path.GET_CARDS) {
             val userId = call.parameters["userId"] ?: throw InvalidParameterException("Missing parameter userId")
             call.respond(getCardsAction(userId))
+        }
+    }
+
+    private fun Route.createUser(createUserAction: CreateUser) {
+        post(Path.CREATE_USER) {
+            val user = call.receive<CreateUserJson>()
+            createUserAction(user.toUser())
         }
     }
 }

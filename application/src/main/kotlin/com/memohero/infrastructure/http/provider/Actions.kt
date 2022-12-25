@@ -3,6 +3,7 @@ package com.memohero.infrastructure.http.provider
 import com.memohero.core.action.cards.GetCards
 import com.memohero.core.action.cards.GetVersion
 import com.memohero.core.action.cards.StoreCard
+import com.memohero.core.action.users.CreateUser
 import com.memohero.infrastructure.Repositories
 
 object Actions {
@@ -17,5 +18,9 @@ object Actions {
 
     val getCards by lazy {
         GetCards(Repositories.cardRepository)
+    }
+
+    val createUser by lazy {
+        CreateUser(Repositories.userRepository)
     }
 }
