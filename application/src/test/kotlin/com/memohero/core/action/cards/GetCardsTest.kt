@@ -11,10 +11,11 @@ import org.mockito.kotlin.whenever
 class GetCardsTest {
     private val mockedRepository: CardRepository = mock()
     private val userId = "some id"
+    private val card = Card(userId, "front", "back")
 
     @Before
     fun setUp() {
-        whenever(mockedRepository.getByUserId(userId)).thenReturn(listOf(Card(userId)))
+        whenever(mockedRepository.getByUserId(userId)).thenReturn(listOf(card))
     }
 
     @Test

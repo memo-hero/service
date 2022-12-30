@@ -14,7 +14,7 @@ class CreateCardTest {
     @Test
     fun `should store new cards`() {
         val storeCard = StoreCard(mockedRepository)
-        val newCard = Card(userId)
+        val newCard = Card(userId, "front", "back")
 
         storeCard(newCard)
 
