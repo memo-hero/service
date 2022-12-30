@@ -13,7 +13,6 @@ data class CardJson(
             userId = userId,
             front = front,
             back = back,
-            repetition = repetition,
         )
     }
 }

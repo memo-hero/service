@@ -11,7 +11,7 @@ import org.mockito.kotlin.whenever
 class GetCardsTest {
     private val mockedRepository: CardRepository = mock()
     private val userId = "some id"
-    private val card = Card(userId, "front", "back")
+    private val card = Card(userId = userId, front = "front", back = "back")
 
     @Before
     fun setUp() {
