@@ -11,6 +11,6 @@ RUN gradle clean build jar
 #####################
 FROM eclipse-temurin
 EXPOSE 8282
-COPY --from=builder /application/build/libs/memohero-0.0.1.jar .
+COPY --from=builder /application/build/libs/memohero-0.0.2.jar .
 WORKDIR /
-CMD java -jar ./memohero-0.0.1.jar
+CMD java -jar ./memohero-0.0.2.jar
