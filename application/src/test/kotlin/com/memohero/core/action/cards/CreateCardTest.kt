@@ -10,7 +10,6 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import java.lang.Exception
 
 class CreateCardTest {
     private val mockedRepository: CardRepository = mock()
@@ -23,6 +22,7 @@ class CreateCardTest {
 
         storeCard(newCard)
 
+        verify(mockedRepository, times(1)).getById(newCard.id)
         verify(mockedRepository, times(1)).add(newCard)
     }
 
