@@ -17,8 +17,8 @@ class StudyCard(
             ?: throw CardNotFoundException(cardAnswer.cardId)
         val user = retrieveUser(cardAnswer.userId)
 
-        val newInterval = spacedRepetitionService.calculateInterval(card, cardAnswer.quality)
-        val updatedCard = card.updateInterval(newInterval)
+        val result = spacedRepetitionService.calculateInterval(card.studyMetadata, cardAnswer.quality)
+        val updatedCard = card.updateMetadata(result)
 
         cardRepository.update(updatedCard)
     }
