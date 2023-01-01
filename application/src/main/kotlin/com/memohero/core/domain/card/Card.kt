@@ -8,4 +8,9 @@ data class Card (
     val front: String,
     val back: String,
     val studyMetadata: CardStudyMetadata = CardStudyMetadata(),
-)
+) {
+    fun updateInterval(interval: Int): Card {
+        val updatedMetadata = studyMetadata.copy(interval = interval)
+        return this.copy(studyMetadata = updatedMetadata)
+    }
+}

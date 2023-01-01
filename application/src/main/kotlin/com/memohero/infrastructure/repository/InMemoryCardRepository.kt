@@ -16,4 +16,8 @@ class InMemoryCardRepository: CardRepository {
 
     override fun getById(id: UUID) =
         storedCards.firstOrNull { it.id == id }
+
+    override fun update(card: Card) {
+        TODO("Not yet implemented")
+    }
 }
