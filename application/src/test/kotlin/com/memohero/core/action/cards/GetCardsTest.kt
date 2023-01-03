@@ -1,7 +1,7 @@
 package com.memohero.core.action.cards
 
-import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardRepository
+import com.memohero.tools.CardMother
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -10,19 +10,18 @@ import org.mockito.kotlin.whenever
 
 class GetCardsTest {
     private val mockedRepository: CardRepository = mock()
-    private val userId = "some id"
-    private val card = Card(userId = userId, front = "front", back = "back")
+    private val card = CardMother.getNewCard()
 
     @Before
     fun setUp() {
-        whenever(mockedRepository.getByUserId(userId)).thenReturn(listOf(card))
+        whenever(mockedRepository.getByUserId(card.userId)).thenReturn(listOf(card))
     }
 
     @Test
     fun `Should return all cards for a given user`() {
         val getCards = GetCards(mockedRepository)
 
-        val result = getCards(userId)
+        val result = getCards(card.userId)
 
         assertThat(result.size).isGreaterThan(0)
     }

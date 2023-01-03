@@ -1,8 +1,8 @@
 package com.memohero.core.action.cards
 
-import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardRepository
 import com.memohero.core.domain.exceptions.CardAlreadyExistsException
+import com.memohero.tools.CardMother
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
@@ -13,12 +13,11 @@ import org.mockito.kotlin.whenever
 
 class CreateCardTest {
     private val mockedRepository: CardRepository = mock()
-    private val userId = "user id"
+    private val newCard = CardMother.getNewCard()
 
     @Test
     fun `should store new cards`() {
         val storeCard = StoreCard(mockedRepository)
-        val newCard = Card(userId = userId, front = "front", back = "back")
 
         storeCard(newCard)
 
@@ -29,7 +28,6 @@ class CreateCardTest {
     @Test
     fun `should not store duplicated id cards`() {
         val storeCard = StoreCard(mockedRepository)
-        val newCard = Card(userId = userId, front = "front", back = "back")
         whenever(mockedRepository.getById(newCard.id)).thenReturn(newCard)
 
         val ex = assertThrows<CardAlreadyExistsException> {
