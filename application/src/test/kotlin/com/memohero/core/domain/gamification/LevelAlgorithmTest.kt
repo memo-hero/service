@@ -27,4 +27,16 @@ class LevelAlgorithmTest {
         assertThat(result.didLevelUp).isEqualTo(true)
         assertThat(result.expDifference).isEqualTo(25)
     }
+
+    @Test
+    fun `Should return true if the exp is exactly the amount needed`() {
+        val algorithm = LevelAlgorithm()
+        val level = 1
+        val exp = 75
+
+        val result = algorithm.check(level, exp)
+
+        assertThat(result.didLevelUp).isEqualTo(true)
+        assertThat(result.expDifference).isEqualTo(0)
+    }
 }

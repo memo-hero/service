@@ -19,8 +19,3 @@ class LevelAlgorithm {
         return ((0.04 * (nextLevel.toDouble().pow(3)) + 0.8 * (nextLevel.toDouble().pow(2)) + 2 * nextLevel) * 10).roundToInt()
     }
 }
-
-data class LevelCheck(
-    val didLevelUp: Boolean = false,
-    val expDifference: Int = 0,
-)
