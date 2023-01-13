@@ -4,8 +4,8 @@ import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-class LevelAlgorithm {
-    fun check(currentLevel: Int, currentExp: Int): LevelCheck {
+class LevelAlgorithm : ILevelAlgorithm {
+    override fun check(currentLevel: Int, currentExp: Int): LevelCheck {
         val expNeeded = getExpNeededToLevelUp(currentLevel)
 
         return LevelCheck(

@@ -1,6 +1,6 @@
 package com.memohero.core.domain.card
 
-import com.memohero.core.domain.spacedrepetition.supermemo2.Supermemo2Result
+import com.memohero.core.domain.user.Category
 import java.util.*
 
 data class Card (
@@ -8,13 +8,8 @@ data class Card (
     val userId: String,
     val front: String,
     val back: String,
+    val category: Category,
     val studyMetadata: CardStudyMetadata = CardStudyMetadata(),
 ) {
-    fun updateMetadata(supermemo2Result: Supermemo2Result): Card {
-        return this.copy(studyMetadata = studyMetadata.copy(
-            interval = supermemo2Result.interval,
-            easeFactor = supermemo2Result.easeFactor,
-            repetition = supermemo2Result.repetition,
-        ))
-    }
+    fun updateMetadata(cardStudyMetadata: CardStudyMetadata) = this.copy(studyMetadata = cardStudyMetadata)
 }

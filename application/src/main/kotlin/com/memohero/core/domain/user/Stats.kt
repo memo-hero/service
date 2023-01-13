@@ -1,7 +1,8 @@
 package com.memohero.core.domain.user
 
 data class Stats(
-    val categories: List<CategoryStats>,
+    val health: Int = 100,
+    val categories: MutableList<CategoryStats>
 ) {
     val generalLevel get() = calculateGeneralLevel()
 

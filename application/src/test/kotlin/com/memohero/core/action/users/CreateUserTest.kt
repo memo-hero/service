@@ -1,8 +1,8 @@
 package com.memohero.core.action.users
 
 import com.memohero.core.domain.user.UserRepository
-import com.memohero.tools.UserMother
-import org.junit.Test
+import com.memohero.tools.mothers.getRandomUser
+import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -10,7 +10,7 @@ import org.mockito.kotlin.whenever
 
 class CreateUserTest {
     private val mockedRepository: UserRepository = mock()
-    private val user = UserMother.getUser()
+    private val user = getRandomUser()
 
     @Test
     fun `Should store an user`() {

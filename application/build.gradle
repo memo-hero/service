@@ -74,4 +74,9 @@ task generateVersionProperties {
         propertiesFile.withWriter { properties.store(it, null) }
     }
 }
+
+test {
+    useJUnitPlatform()
+}
+
 processResources.dependsOn generateVersionProperties

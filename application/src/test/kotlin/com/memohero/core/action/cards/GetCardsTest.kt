@@ -1,18 +1,18 @@
 package com.memohero.core.action.cards
 
 import com.memohero.core.domain.card.CardRepository
-import com.memohero.tools.CardMother
+import com.memohero.tools.mothers.getRandomNewCard
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
 class GetCardsTest {
     private val mockedRepository: CardRepository = mock()
-    private val card = CardMother.getNewCard()
+    private val card = getRandomNewCard()
 
-    @Before
+    @BeforeEach
     fun setUp() {
         whenever(mockedRepository.getByUserId(card.userId)).thenReturn(listOf(card))
     }

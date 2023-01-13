@@ -2,9 +2,9 @@ package com.memohero.core.action.cards
 
 import com.memohero.core.domain.card.CardRepository
 import com.memohero.core.domain.exceptions.CardAlreadyExistsException
-import com.memohero.tools.CardMother
+import com.memohero.tools.mothers.getRandomNewCard
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
@@ -13,7 +13,7 @@ import org.mockito.kotlin.whenever
 
 class CreateCardTest {
     private val mockedRepository: CardRepository = mock()
-    private val newCard = CardMother.getNewCard()
+    private val newCard = getRandomNewCard()
 
     @Test
     fun `should store new cards`() {
