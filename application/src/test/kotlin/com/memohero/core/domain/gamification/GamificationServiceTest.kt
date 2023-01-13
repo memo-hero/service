@@ -1,10 +1,10 @@
 package com.memohero.core.domain.gamification
 
 import com.memohero.core.domain.user.Category
-import com.memohero.core.domain.user.CategoryStats
+import com.memohero.core.domain.user.CategoryProperties
 import com.memohero.core.domain.user.Stats
 import com.memohero.core.domain.user.UserRepository
-import com.memohero.tools.mothers.getRandomCategoryStat
+import com.memohero.tools.mothers.getRandomCategoryProperties
 import com.memohero.tools.mothers.getRandomStats
 import com.memohero.tools.mothers.getRandomUser
 import org.assertj.core.api.Assertions.assertThat
@@ -48,7 +48,7 @@ class GamificationServiceTest {
                 1,
                 0,
                 getGamificationResult(
-                    category = getRandomCategoryStat(category = Category.ARTS, level = 1, exp = 10)
+                    category = getRandomCategoryProperties(level = 1, exp = 10)
                 ),
             ),
 
@@ -57,7 +57,7 @@ class GamificationServiceTest {
                 2,
                 30,
                 getGamificationResult(
-                    category = getRandomCategoryStat(category = Category.ARTS, level = 2, exp = 40)
+                    category = getRandomCategoryProperties(level = 2, exp = 40)
                 ),
             ),
 
@@ -67,7 +67,7 @@ class GamificationServiceTest {
                 65,
                 getGamificationResult(
                     didLevelUp = true,
-                    category = getRandomCategoryStat(category = Category.ARTS, level = 2, exp = 0)
+                    category = getRandomCategoryProperties(level = 2, exp = 0)
                 ),
             ),
 
@@ -77,7 +77,7 @@ class GamificationServiceTest {
                 70,
                 getGamificationResult(
                     didLevelUp = true,
-                    category = getRandomCategoryStat(category = Category.ARTS, level = 2, exp = 5)
+                    category = getRandomCategoryProperties(level = 2, exp = 5)
                 ),
             ),
         )
@@ -97,9 +97,8 @@ class GamificationServiceTest {
         exp: Int = 0
     ) = getRandomUser(
         stats = getRandomStats(
-            categories = listOf(
-                getRandomCategoryStat(
-                    category = category,
+            categories = mutableMapOf(
+                Category.ARTS to getRandomCategoryProperties(
                     level = level,
                     exp = exp,
                 )
@@ -111,7 +110,7 @@ class GamificationServiceTest {
 fun getGamificationResult(
     didLevelUp: Boolean = false,
     didGetKnockedOut: Boolean = false,
-    category: CategoryStats = getRandomCategoryStat(),
+    category: CategoryProperties = getRandomCategoryProperties(),
     userStats: Stats = getRandomStats(),
 ) = GamificationResult(
     didLevelUp = didLevelUp,

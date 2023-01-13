@@ -1,7 +1,7 @@
 package com.memohero.tools.mothers
 
 import com.memohero.core.domain.user.Category
-import com.memohero.core.domain.user.CategoryStats
+import com.memohero.core.domain.user.CategoryProperties
 import com.memohero.core.domain.user.Stats
 import com.memohero.core.domain.user.User
 import com.memohero.tools.getRandomInt
@@ -17,24 +17,22 @@ fun getRandomUser(
 
 fun getRandomStats(
     health: Int = 100,
-    categories: List<CategoryStats> = listOf(
-        getRandomCategoryStat(category = Category.ARTS),
-        getRandomCategoryStat(category = Category.COMPUTERS),
-        getRandomCategoryStat(category = Category.HISTORY),
-        getRandomCategoryStat(category = Category.LANGUAGES),
-        getRandomCategoryStat(category = Category.SCIENCE),
+    categories: MutableMap<Category, CategoryProperties> = mutableMapOf(
+        Category.ARTS to getRandomCategoryProperties(),
+        Category.COMPUTERS to getRandomCategoryProperties(),
+        Category.HISTORY to getRandomCategoryProperties(),
+        Category.LANGUAGES to getRandomCategoryProperties(),
+        Category.SCIENCE to getRandomCategoryProperties(),
     )
 ) = Stats(
     health = health,
     categories = categories,
 )
 
-fun getRandomCategoryStat(
-    category: Category = Category.values().random(),
+fun getRandomCategoryProperties(
     level: Int = getRandomInt(1, 10),
     exp: Int = getRandomInt(0, 75),
-) = CategoryStats(
-    category = category,
+) = CategoryProperties(
     level = level,
     exp = exp,
 )

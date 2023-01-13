@@ -10,20 +10,15 @@ class GamificationService(
     private val baseDamage = 10
 
     override fun grantExp(user: User, category: Category): GamificationResult {
-        val stat = user.stats.categories.first { it.category == category }
+        val stat = user.stats.categories[category]!!
         val result = levelingAlgorithm.check(stat.level, stat.exp + baseExp)
 
         val updatedStat = if (result.didLevelUp) stat.copy(level = stat.level + 1, exp = result.expDifference)
             else stat.copy(exp = stat.exp + baseExp)
 
-        val mutableList = user.stats.categories.toMutableList()
-        mutableList[user.stats.categories.indexOf(stat)] = updatedStat
+        user.stats.categories[category] = updatedStat
 
-        userRepository.updateUser(user.copy(
-            stats = user.stats.copy(
-                categories = mutableList
-            )
-        ))
+        userRepository.updateUser(user)
 
         return GamificationResult(
             didLevelUp = result.didLevelUp,
