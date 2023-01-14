@@ -13,6 +13,7 @@ fun getRandomNewCard(
     front: String = getRandomString(10),
     back: String = getRandomString(10),
     category: Category = Category.values().random(),
+    tags: MutableSet<String> = mutableSetOf(getRandomString(5)),
     studyMetadata: CardStudyMetadata = getRandomCardStudyMetadata(),
 ) = Card(
     id = id,
@@ -20,6 +21,7 @@ fun getRandomNewCard(
     front = front,
     back = back,
     category = category,
+    tags = tags,
     studyMetadata = studyMetadata
 )
 

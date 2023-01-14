@@ -9,6 +9,7 @@ data class Card (
     val front: String,
     val back: String,
     val category: Category,
+    val tags: MutableSet<String>,
     val studyMetadata: CardStudyMetadata = CardStudyMetadata(),
 ) {
     fun updateMetadata(cardStudyMetadata: CardStudyMetadata) = this.copy(studyMetadata = cardStudyMetadata)
