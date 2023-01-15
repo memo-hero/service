@@ -2,12 +2,42 @@ package com.memohero.infrastructure.repository.dynamodb
 
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
 import aws.sdk.kotlin.services.dynamodb.model.GetItemResponse
+import com.memohero.core.domain.card.Card
+import com.memohero.core.domain.card.CardStudyMetadata
 import com.memohero.core.domain.user.Category
 import com.memohero.core.domain.user.CategoryProperties
 import com.memohero.core.domain.user.Stats
 import com.memohero.core.domain.user.User
 
 object DynamoMapper {
+    fun User.toDynamoMap(): MutableMap<String, AttributeValue> {
+        return mutableMapOf(
+            "id" to AttributeValue.S(this.id),
+            "stats" to AttributeValue.M(this.stats.toDynamoMap())
+        )
+    }
+
+    fun Card.toDynamoMap(): MutableMap<String, AttributeValue> {
+        return mutableMapOf(
+            "id" to AttributeValue.S(this.id.toString()),
+            "user_id" to AttributeValue.S(this.userId),
+            "front" to AttributeValue.S(this.front),
+            "back" to AttributeValue.S(this.back),
+            "category" to AttributeValue.S(this.category.name),
+            "tags" to AttributeValue.Ss(this.tags.toList()),
+            "due_date" to AttributeValue.N(this.dueDate.toString()),
+            "study_metadata" to AttributeValue.M(this.studyMetadata.toDynamoMap()),
+        )
+    }
+
+    private fun CardStudyMetadata.toDynamoMap(): MutableMap<String, AttributeValue> {
+        return mutableMapOf(
+            "repetition" to AttributeValue.N(this.repetition.toString()),
+            "ease_factor" to AttributeValue.N(this.easeFactor.toString()),
+            "interval" to AttributeValue.N(this.interval.toString()),
+        )
+    }
+
     private fun CategoryProperties.toDynamoMap(): MutableMap<String, AttributeValue> {
         return mutableMapOf(
             "level" to AttributeValue.N(this.level.toString()),
@@ -25,13 +55,6 @@ object DynamoMapper {
         return mutableMapOf(
             "health" to AttributeValue.N(this.health.toString()),
             "categories" to AttributeValue.M(categories)
-        )
-    }
-
-    fun User.toDynamoMap(): MutableMap<String, AttributeValue> {
-        return mutableMapOf(
-            "id" to AttributeValue.S(this.id),
-            "stats" to AttributeValue.M(this.stats.toDynamoMap())
         )
     }
 

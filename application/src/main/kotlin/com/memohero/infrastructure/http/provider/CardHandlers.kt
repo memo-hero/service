@@ -17,6 +17,9 @@ fun Route.storeCard(storeCardAction: StoreCard) {
         try {
             val card =  call.receive<CardJson>()
             storeCardAction(card.toCard())
+
+            call.response.status(HttpStatusCode.OK)
+            call.respond(card)
         }
         catch (ex: CardAlreadyExistsException) {
             call.response.status(HttpStatusCode.BadRequest)
