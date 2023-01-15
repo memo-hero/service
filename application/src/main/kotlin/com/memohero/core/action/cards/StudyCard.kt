@@ -4,7 +4,6 @@ import com.memohero.core.domain.card.CardAnswer
 import com.memohero.core.domain.card.CardRepository
 import com.memohero.core.domain.exceptions.CardNotFoundException
 import com.memohero.core.domain.exceptions.UserNotFoundException
-import com.memohero.core.domain.gamification.GamificationService
 import com.memohero.core.domain.gamification.IGamificationService
 import com.memohero.core.domain.spacedrepetition.ISpacedRepetitionService
 import com.memohero.core.domain.user.UserRepository

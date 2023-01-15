@@ -1,9 +1,10 @@
-package com.memohero.infrastructure.http.provider;
+package com.memohero.infrastructure.http.provider
 
 import com.memohero.core.action.cards.GetCards
 import com.memohero.core.action.cards.GetVersion
 import com.memohero.core.action.cards.StoreCard
 import com.memohero.core.action.users.CreateUser
+import com.memohero.core.action.users.UpdateUser
 import com.memohero.core.domain.exceptions.InvalidParameterException
 import com.memohero.infrastructure.http.Path
 import com.memohero.infrastructure.http.handler.CardJson
@@ -30,6 +31,7 @@ object KtorProvider {
                 getCards(Actions.getCards)
 
                 createUser(Actions.createUser)
+                updateUser(Actions.updateUser)
             }
         }
         server.start(wait = true)
@@ -59,6 +61,13 @@ object KtorProvider {
         post(Path.CREATE_USER) {
             val user = call.receive<CreateUserJson>()
             createUserAction(user.toUser())
+        }
+    }
+
+    private fun Route.updateUser(updateUserAction: UpdateUser) {
+        put(Path.UPDATE_USER) {
+            val user = call.receive<CreateUserJson>()
+            updateUserAction(user.toUser())
         }
     }
 }
