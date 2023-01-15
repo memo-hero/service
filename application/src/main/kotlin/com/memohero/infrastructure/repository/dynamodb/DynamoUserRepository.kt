@@ -1,10 +1,7 @@
 package com.memohero.infrastructure.repository.dynamodb
 
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
-import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
-import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
-import aws.sdk.kotlin.services.dynamodb.model.GetItemResponse
-import aws.sdk.kotlin.services.dynamodb.model.PutItemRequest
+import aws.sdk.kotlin.services.dynamodb.model.*
 import com.memohero.core.domain.user.User
 import com.memohero.core.domain.user.UserRepository
 import com.memohero.infrastructure.repository.dynamodb.DynamoMapper.toDynamoMap
@@ -27,8 +24,17 @@ class DynamoUserRepository(
         }
     }
 
-    override fun getById(id: String): User {
-        TODO("Not yet implemented")
+    override fun getById(id: String): User? {
+        val result: GetItemResponse
+        val request = GetItemRequest {
+            key = mutableMapOf<String, AttributeValue>("id" to AttributeValue.S(id))
+            tableName = dbTableName
+        }
+        runBlocking {
+            result = client.getItem(request)
+        }
+
+        return result.toUser()
     }
 
     override fun checkUserExists(user: User): Boolean {
@@ -41,11 +47,18 @@ class DynamoUserRepository(
             result = client.getItem(request)
         }
 
-        return user != result.toUser()
+        return result.toUser() != null
     }
 
     override fun updateUser(user: User) {
-        TODO("Not yet implemented")
+        val request = PutItemRequest {
+            tableName = dbTableName
+            item = user.toDynamoMap()
+        }
+
+        runBlocking {
+            client.putItem(request)
+        }
     }
 }
 

@@ -3,6 +3,7 @@ package com.memohero.core.action.cards
 import com.memohero.core.domain.card.CardAnswer
 import com.memohero.core.domain.card.CardRepository
 import com.memohero.core.domain.exceptions.CardNotFoundException
+import com.memohero.core.domain.exceptions.UserNotFoundException
 import com.memohero.core.domain.gamification.GamificationService
 import com.memohero.core.domain.gamification.IGamificationService
 import com.memohero.core.domain.spacedrepetition.ISpacedRepetitionService
@@ -22,7 +23,7 @@ class StudyCard(
         val result = spacedRepetitionService.calculateInterval(card.studyMetadata, cardAnswer.quality)
         val updatedCard = card.updateMetadata(result)
 
-        val user = retrieveUser(cardAnswer.userId)
+        val user = retrieveUser(cardAnswer.userId) ?: throw UserNotFoundException("User with ${ cardAnswer.userId } was not found")
 
         if(cardAnswer.quality >= 3) gamificationService.grantExp(user, card.category)
         else gamificationService.applyDamage(user)
