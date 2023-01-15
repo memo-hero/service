@@ -1,5 +1,6 @@
 package com.memohero.core.action.users
 
+import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import com.memohero.core.domain.user.UserRepository
 import com.memohero.tools.mothers.getRandomUser
 import org.junit.jupiter.api.Test
@@ -17,6 +18,9 @@ class CreateUserTest {
         val createUser = CreateUser(mockedRepository)
 
         createUser(user)
+
+        val repo = com.memohero.infrastructure.repository.dynamodb.DynamoUserRepository(DynamoDbClient { region = "sa-east-1" })
+        repo.storeUser(user)
 
         verify(mockedRepository, times(1)).checkUserExists(user)
         verify(mockedRepository, times(1)).storeUser(user)

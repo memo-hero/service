@@ -1,7 +1,9 @@
 package com.memohero.core.domain.user
 
+import java.util.*
+
 data class User(
-    val id: String,
+    val id: String = UUID.randomUUID().toString(),
     val stats: Stats = Stats(
         categories = mutableMapOf(
             Category.ARTS to CategoryProperties(),
