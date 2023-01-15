@@ -10,6 +10,7 @@ class CreateUser(
     operator fun invoke(user: User) {
         if (!userRepository.checkUserExists(user))
             userRepository.storeUser(user)
-        throw UserAlreadyExistsException(user.id)
+        else
+            throw UserAlreadyExistsException(user.id)
     }
 }
