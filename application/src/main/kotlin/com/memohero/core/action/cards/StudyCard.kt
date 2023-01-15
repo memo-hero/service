@@ -22,7 +22,7 @@ class StudyCard(
         val result = spacedRepetitionService.calculateInterval(card.studyMetadata, cardAnswer.quality)
         val updatedCard = card.updateMetadata(result)
 
-        val user = retrieveUser(cardAnswer.userId) ?: throw UserNotFoundException("User with ${ cardAnswer.userId } was not found")
+        val user = retrieveUser(cardAnswer.userId) ?: throw UserNotFoundException(cardAnswer.userId)
 
         if(cardAnswer.quality >= 3) gamificationService.grantExp(user, card.category)
         else gamificationService.applyDamage(user)

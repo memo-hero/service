@@ -24,6 +24,7 @@ object KtorProvider {
                 getCards(Actions.getCards)
 
                 createUser(Actions.createUser)
+                getUserByID(Actions.getUserByID)
                 updateUser(Actions.updateUser)
             }
         }

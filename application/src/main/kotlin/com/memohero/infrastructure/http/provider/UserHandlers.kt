@@ -1,7 +1,9 @@
 package com.memohero.infrastructure.http.provider
 
 import com.memohero.core.action.users.CreateUser
+import com.memohero.core.action.users.GetUserByID
 import com.memohero.core.action.users.UpdateUser
+import com.memohero.core.domain.exceptions.InvalidParameterException
 import com.memohero.core.domain.exceptions.UserAlreadyExistsException
 import com.memohero.core.domain.exceptions.UserNotFoundException
 import com.memohero.infrastructure.http.Path
@@ -21,7 +23,7 @@ fun Route.updateUser(updateUserAction: UpdateUser) {
         }
         catch (ex: UserNotFoundException) {
             call.response.status(HttpStatusCode.BadRequest)
-            call.respond(ex.message)
+            call.respond(ex.message!!)
         }
         catch (ex: Exception) {
             call.response.status(HttpStatusCode.InternalServerError)
@@ -41,7 +43,31 @@ fun Route.createUser(createUserAction: CreateUser) {
         }
         catch (ex: UserAlreadyExistsException) {
             call.response.status(HttpStatusCode.BadRequest)
+            call.respond(ex.message!!)
+        }
+        catch (ex: Exception) {
+            call.response.status(HttpStatusCode.InternalServerError)
+            call.respond(ex.message!!)
+        }
+    }
+}
+
+fun Route.getUserByID(getById: GetUserByID) {
+    get(Path.GET_USER_BY_ID) {
+        try {
+            val userId = call.parameters["userId"] ?: throw InvalidParameterException("Missing parameter userId")
+            val user = getById(userId)
+
+            call.response.status(HttpStatusCode.OK)
+            call.respond(user)
+        }
+        catch (ex: InvalidParameterException) {
+            call.response.status(HttpStatusCode.BadRequest)
             call.respond(ex.message)
+        }
+        catch (ex: UserNotFoundException) {
+            call.response.status(HttpStatusCode.NotFound)
+            call.respond(ex.message!!)
         }
         catch (ex: Exception) {
             call.response.status(HttpStatusCode.InternalServerError)
