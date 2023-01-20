@@ -9,7 +9,7 @@ import com.memohero.infrastructure.repository.dynamodb.DynamoMapper.toUser
 import kotlinx.coroutines.runBlocking
 
 class DynamoUserRepository(
-    private val client: DynamoDbClient = DynamoDbClient { region = "sa-east-1" }
+    private val client: DynamoDbClient
 ): UserRepository {
     private val dbTableName = "Users"
 

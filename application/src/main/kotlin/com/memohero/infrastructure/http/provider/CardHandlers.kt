@@ -15,8 +15,8 @@ import io.ktor.server.routing.*
 fun Route.storeCard(storeCardAction: StoreCard) {
     post(Path.STORE_CARD) {
         try {
-            val card =  call.receive<CardJson>()
-            storeCardAction(card.toCard())
+            val card =  call.receive<CardJson>().toCard()
+            storeCardAction(card)
 
             call.response.status(HttpStatusCode.OK)
             call.respond(card)

@@ -11,7 +11,7 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
-class CreateCardTest {
+class StoreCardTest {
     private val mockedRepository: CardRepository = mock()
     private val newCard = getRandomNewCard()
 
