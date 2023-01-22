@@ -1,3 +1,3 @@
 package com.memohero.core.domain.exceptions
 
-class UserNotFoundException(override val message: String) : Throwable()
+class UserNotFoundException(id: String) : Throwable("User with id $id was not found.")

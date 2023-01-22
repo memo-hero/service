@@ -7,6 +7,7 @@ import com.memohero.core.domain.gamification.IGamificationService
 import com.memohero.core.domain.spacedrepetition.ISpacedRepetitionService
 import com.memohero.core.domain.user.UserRepository
 import com.memohero.tools.mothers.getRandomNewCard
+import com.memohero.tools.mothers.getRandomUser
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -20,18 +21,19 @@ internal class StudyCardTest {
     private val spacedRepetitionService: ISpacedRepetitionService = mock()
     private val gamificationService: IGamificationService = mock()
     private val quality = 5
-    private val cardStudyMetadata = CardStudyMetadata(0,0.0,0)//Supermemo2ResultMother.getSupermemo2Result()
+    private val cardStudyMetadata = CardStudyMetadata(0,0.0,0)
     private val card = getRandomNewCard()
 
     @BeforeEach
     fun setUp() {
-        whenever(mockedCardRepository.getById(card.id)).thenReturn(card)
+        whenever(mockedCardRepository.getByUserId(card.userId)).thenReturn(listOf(card))
+        whenever(mockedUserRepository.getById(card.userId)).thenReturn(getRandomUser(id = card.userId))
         whenever(spacedRepetitionService.calculateInterval(card.studyMetadata, quality)).thenReturn(cardStudyMetadata)
     }
 
     @Test
     fun `studying a card should update a card's interval`() {
-        val userId = "1"
+        val userId = card.userId
         val answer = CardAnswer(userId = userId, cardId = card.id, quality)
         val updatedCard = card.updateMetadata(cardStudyMetadata)
         val studyCard = StudyCard(
@@ -43,7 +45,6 @@ internal class StudyCardTest {
 
         studyCard(answer)
 
-        verify(mockedCardRepository, times(1)).getById(card.id)
         verify(mockedUserRepository, times(1)).getById(userId)
         verify(spacedRepetitionService, times(1)).calculateInterval(cardMetadata = card.studyMetadata, answer.quality)
         verify(mockedCardRepository, times(1)).update(updatedCard)

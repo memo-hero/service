@@ -5,6 +5,7 @@ import com.memohero.core.domain.card.CardStudyMetadata
 import com.memohero.core.domain.user.Category
 import com.memohero.tools.getRandomInt
 import com.memohero.tools.getRandomString
+import java.time.LocalDate
 import java.util.*
 
 fun getRandomNewCard(
@@ -13,6 +14,8 @@ fun getRandomNewCard(
     front: String = getRandomString(10),
     back: String = getRandomString(10),
     category: Category = Category.values().random(),
+    tags: MutableSet<String> = mutableSetOf(getRandomString(5)),
+    dueDate: Long = LocalDate.now().toEpochDay(),
     studyMetadata: CardStudyMetadata = getRandomCardStudyMetadata(),
 ) = Card(
     id = id,
@@ -20,7 +23,9 @@ fun getRandomNewCard(
     front = front,
     back = back,
     category = category,
-    studyMetadata = studyMetadata
+    tags = tags,
+    dueDate = dueDate,
+    studyMetadata = studyMetadata,
 )
 
 fun getRandomCardStudyMetadata(

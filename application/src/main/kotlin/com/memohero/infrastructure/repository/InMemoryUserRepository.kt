@@ -8,7 +8,7 @@ class InMemoryUserRepository: UserRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getById(id: String): User {
+    override fun getById(id: String): User? {
         TODO("Not yet implemented")
     }
 
