@@ -1,6 +1,7 @@
 package com.memohero.infrastructure.http.provider
 
 import com.memohero.core.action.cards.GetCards
+import com.memohero.core.action.cards.GetCardsByTag
 import com.memohero.core.action.cards.StoreCard
 import com.memohero.core.domain.exceptions.CardAlreadyExistsException
 import com.memohero.core.domain.exceptions.InvalidParameterException
@@ -38,6 +39,20 @@ fun Route.getCards(getCardsAction: GetCards) {
         try {
             val userId = call.parameters["user_id"] ?: throw InvalidParameterException("Missing parameter userId")
             call.respond(getCardsAction(userId))
+        }
+        catch (ex: Exception) {
+            call.response.status(HttpStatusCode.InternalServerError)
+            call.respond(ex.message!!)
+        }
+    }
+}
+
+fun Route.getCardsByTags(getCardsByTag: GetCardsByTag) {
+    get(Path.GET_CARDS_BY_TAGS) {
+        try {
+            val userId = call.parameters["user_id"] ?: throw InvalidParameterException("Missing parameter user_id")
+            val tags = call.parameters.getAll("tag") ?: throw InvalidParameterException("Missing parameter tags")
+            call.respond(getCardsByTag(userId, tags.toMutableSet()))
         }
         catch (ex: Exception) {
             call.response.status(HttpStatusCode.InternalServerError)

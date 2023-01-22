@@ -13,7 +13,7 @@ object Repositories {
     }
 
     val cardRepository: CardRepository by lazy {
-        DynamoCardRepository(dynamoClient)
+        DynamoCardRepository(Services.dynamoDbService)
     }
 
     val userRepository: UserRepository by lazy {

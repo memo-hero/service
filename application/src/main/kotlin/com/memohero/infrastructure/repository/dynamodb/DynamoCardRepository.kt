@@ -4,59 +4,47 @@ import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import aws.sdk.kotlin.services.dynamodb.model.*
 import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardRepository
-import com.memohero.infrastructure.repository.dynamodb.DynamoMapper.toCard
 import com.memohero.infrastructure.repository.dynamodb.DynamoMapper.toCardList
 import com.memohero.infrastructure.repository.dynamodb.DynamoMapper.toDynamoMap
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class DynamoCardRepository(
-    private val client: DynamoDbClient
+    private val dynamoService: DynamoDbService
 ): CardRepository {
     private val dbTableName = "Cards"
 
     override fun add(card: Card) {
-        val request = PutItemRequest {
-            tableName = dbTableName
-            item = card.toDynamoMap()
-        }
-
         runBlocking {
-            client.putItem(request)
+            dynamoService.dynamoPutItemRequest(dbTableName, card.toDynamoMap())
         }
     }
 
     override fun getByUserId(id: String): List<Card> {
         val partitionKeyName = "user_id"
-        val attrNameAlias = mutableMapOf<String, String>()
-        attrNameAlias["#a"] = "user_id"
-        val attrValues = mutableMapOf<String, AttributeValue>()
-        attrValues[":$partitionKeyName"] = AttributeValue.S(id)
-
-        val request = QueryRequest {
-            tableName = dbTableName
-            keyConditionExpression = "#a = :$partitionKeyName"
-            expressionAttributeNames = attrNameAlias
-            this.expressionAttributeValues = attrValues
-        }
+        val attributeAlias = "#a"
+        val attributeNames = mutableMapOf(attributeAlias to partitionKeyName)
+        val attributeValues = mutableMapOf<String, AttributeValue>(":$partitionKeyName" to AttributeValue.S(id))
+        val keyConditionExpression = "$attributeAlias = :$partitionKeyName"
 
         val result: QueryResponse
         runBlocking {
-            result = client.query(request)
+            result = dynamoService.dynamoQueryRequest(dbTableName, keyConditionExpression, attributeNames, attributeValues)
         }
 
         return result.toCardList()
     }
 
     override fun getById(id: UUID): Card? {
-        val parameters = mutableListOf <AttributeValue>()
-        parameters.add(AttributeValue.S(id.toString()))
-        val result: ExecuteStatementResponse
-        runBlocking {
-            result = executeStatementPartiQL(client, "SELECT * FROM Cards WHERE card_id=?", parameters)
-        }
-
-        return result.toCard()
+//        val parameters = mutableListOf <AttributeValue>()
+//        parameters.add(AttributeValue.S(id.toString()))
+//        val result: ExecuteStatementResponse
+//        runBlocking {
+//            result = executeStatementPartiQL(client, "SELECT * FROM Cards WHERE card_id=?", parameters)
+//        }
+//
+//        return result.toCard()
+        TODO("Not yet implemented")
     }
 
     private suspend fun executeStatementPartiQL(
@@ -74,14 +62,9 @@ class DynamoCardRepository(
     }
 
     override fun getByTags(userId: String, tags: Set<String>): List<Card> {
-        val parameters = mutableListOf <AttributeValue>()
-        parameters.add(AttributeValue.S(userId))
-        val result: ExecuteStatementResponse
-        runBlocking {
-            result = executeStatementPartiQL(client, "SELECT * FROM Cards WHERE user_id=?", parameters)
-        }
+        val userCards = getByUserId(userId)
 
-        val cards = result.toCardList().filter { card ->
+        val cards = userCards.filter { card ->
             card.tags.any { it in tags }
         }
 

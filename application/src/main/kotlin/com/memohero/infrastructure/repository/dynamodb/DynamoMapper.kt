@@ -1,9 +1,6 @@
 package com.memohero.infrastructure.repository.dynamodb
 
-import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
-import aws.sdk.kotlin.services.dynamodb.model.ExecuteStatementResponse
-import aws.sdk.kotlin.services.dynamodb.model.GetItemResponse
-import aws.sdk.kotlin.services.dynamodb.model.QueryResponse
+import aws.sdk.kotlin.services.dynamodb.model.*
 import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardStudyMetadata
 import com.memohero.core.domain.user.Category
