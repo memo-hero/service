@@ -34,4 +34,13 @@ class DynamoDbService(
 
         return client.executeStatement(request)
     }
+
+    suspend fun dynamoGetItemRequest(dbTableName: String, keyName: String, keyValue: AttributeValue): GetItemResponse {
+        val request = GetItemRequest {
+            key = mutableMapOf(keyName to keyValue)
+            tableName = dbTableName
+        }
+
+        return client.getItem(request)
+    }
 }
