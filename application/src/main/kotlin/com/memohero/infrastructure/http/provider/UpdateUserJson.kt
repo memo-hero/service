@@ -4,10 +4,9 @@ import com.memohero.core.domain.user.Stats
 import com.memohero.core.domain.user.User
 
 data class UpdateUserJson(
-    val id: String,
     val stats: Stats,
 ) {
-    fun toUser() = User(
+    fun toUser(id: String) = User(
         id = id,
         stats = stats,
     )

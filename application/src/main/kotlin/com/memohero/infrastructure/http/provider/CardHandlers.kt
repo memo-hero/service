@@ -15,7 +15,8 @@ import io.ktor.server.routing.*
 fun Route.storeCard(storeCardAction: StoreCard) {
     post(Path.STORE_CARD) {
         try {
-            val card =  call.receive<CardJson>().toCard()
+            val userId = call.parameters["user_id"] ?: throw InvalidParameterException("Missing parameter userId")
+            val card =  call.receive<CardJson>().toCard(userId = userId)
             storeCardAction(card)
 
             call.response.status(HttpStatusCode.OK)
@@ -35,7 +36,7 @@ fun Route.storeCard(storeCardAction: StoreCard) {
 fun Route.getCards(getCardsAction: GetCards) {
     get(Path.GET_CARDS) {
         try {
-            val userId = call.parameters["userId"] ?: throw InvalidParameterException("Missing parameter userId")
+            val userId = call.parameters["user_id"] ?: throw InvalidParameterException("Missing parameter userId")
             call.respond(getCardsAction(userId))
         }
         catch (ex: Exception) {

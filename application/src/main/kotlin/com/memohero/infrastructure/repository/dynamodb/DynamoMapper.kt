@@ -10,7 +10,6 @@ import com.memohero.core.domain.user.Category
 import com.memohero.core.domain.user.CategoryProperties
 import com.memohero.core.domain.user.Stats
 import com.memohero.core.domain.user.User
-import com.memohero.infrastructure.repository.dynamodb.DynamoMapper.toUser
 import java.util.*
 
 object DynamoMapper {
@@ -70,25 +69,36 @@ object DynamoMapper {
         )
     }
 
-    fun GetItemResponse.toCardList(): List<Card> {
-        return if (this == null) emptyList()
-        else emptyList()
+    fun QueryResponse.toCardList(): List<Card> {
+        return if (this.items == null) emptyList()
+        else {
+            this.items!!.map {
+                it.toCard()
+            }.toList()
+        }
     }
 
     fun ExecuteStatementResponse.toCard(): Card? {
         return if (this.items == null) null
-        else {
-            Card(
-                id = UUID.fromString(this.items!![0]["card_id"]!!.asS()),
-                userId = this.items!![0]["user_id"]!!.asS(),
-                front = this.items!![0]["front"]!!.asS(),
-                back = this.items!![0]["back"]!!.asS(),
-                category = Category.valueOf(this.items!![0]["category"]!!.asS()),
-                dueDate = this.items!![0]["due_date"]!!.asN().toLong(),
-                tags = this.items!![0]["tags"]!!.asSs().toMutableSet(),
-                studyMetadata = this.items!![0]["study_metadata"]!!.toStudyMetadata()
-            )
-        }
+        else this.items!![0].toCard()
+    }
+
+    fun ExecuteStatementResponse.toCardList(): List<Card> {
+        return if (this.items == null) emptyList()
+        else this.items!!.map { it.toCard() }
+    }
+
+    private fun Map<String, AttributeValue>.toCard(): Card {
+        return Card(
+            id = UUID.fromString(this["card_id"]!!.asS()),
+            userId = this["user_id"]!!.asS(),
+            front = this["front"]!!.asS(),
+            back = this["back"]!!.asS(),
+            category = Category.valueOf(this["category"]!!.asS()),
+            dueDate = this["due_date"]!!.asN().toLong(),
+            tags = this["tags"]!!.asSs().toMutableSet(),
+            studyMetadata = this["study_metadata"]!!.toStudyMetadata()
+        )
     }
 
     private fun AttributeValue.toStudyMetadata(): CardStudyMetadata {

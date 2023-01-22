@@ -19,7 +19,8 @@ fun Route.updateUser(updateUserAction: UpdateUser) {
     put(Path.UPDATE_USER) {
         try {
             val user = call.receive<UpdateUserJson>()
-            updateUserAction(user.toUser())
+            val userId = call.parameters["user_id"] ?: throw InvalidParameterException("Missing parameter userId")
+            updateUserAction(user.toUser(userId))
         }
         catch (ex: UserNotFoundException) {
             call.response.status(HttpStatusCode.BadRequest)
@@ -55,7 +56,7 @@ fun Route.createUser(createUserAction: CreateUser) {
 fun Route.getUserByID(getById: GetUserByID) {
     get(Path.GET_USER_BY_ID) {
         try {
-            val userId = call.parameters["userId"] ?: throw InvalidParameterException("Missing parameter userId")
+            val userId = call.parameters["user_id"] ?: throw InvalidParameterException("Missing parameter userId")
             val user = getById(userId)
 
             call.response.status(HttpStatusCode.OK)

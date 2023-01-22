@@ -27,14 +27,22 @@ class DynamoCardRepository(
     }
 
     override fun getByUserId(id: String): List<Card> {
-        val result: GetItemResponse
-        val request = GetItemRequest {
-            key = mutableMapOf<String, AttributeValue>("card_id" to AttributeValue.S(id))
+        val partitionKeyName = "user_id"
+        val attrNameAlias = mutableMapOf<String, String>()
+        attrNameAlias["#a"] = "user_id"
+        val attrValues = mutableMapOf<String, AttributeValue>()
+        attrValues[":$partitionKeyName"] = AttributeValue.S(id)
+
+        val request = QueryRequest {
             tableName = dbTableName
+            keyConditionExpression = "#a = :$partitionKeyName"
+            expressionAttributeNames = attrNameAlias
+            this.expressionAttributeValues = attrValues
         }
 
+        val result: QueryResponse
         runBlocking {
-            result = client.getItem(request)
+            result = client.query(request)
         }
 
         return result.toCardList()
@@ -46,7 +54,6 @@ class DynamoCardRepository(
         val result: ExecuteStatementResponse
         runBlocking {
             result = executeStatementPartiQL(client, "SELECT * FROM Cards WHERE card_id=?", parameters)
-            print(result)
         }
 
         return result.toCard()
@@ -67,6 +74,21 @@ class DynamoCardRepository(
     }
 
     override fun getByTags(userId: String, tags: Set<String>): List<Card> {
+        val parameters = mutableListOf <AttributeValue>()
+        parameters.add(AttributeValue.S(userId))
+        val result: ExecuteStatementResponse
+        runBlocking {
+            result = executeStatementPartiQL(client, "SELECT * FROM Cards WHERE user_id=?", parameters)
+        }
+
+        val cards = result.toCardList().filter { card ->
+            card.tags.any { it in tags }
+        }
+
+        return cards
+    }
+
+    override fun getDueCards(): List<Card> {
         TODO("Not yet implemented")
     }
 

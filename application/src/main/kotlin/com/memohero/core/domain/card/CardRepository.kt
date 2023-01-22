@@ -7,5 +7,6 @@ interface CardRepository {
     fun getByUserId(id: String): List<Card>
     fun getById(id: UUID): Card?
     fun getByTags(userId: String, tags: Set<String>): List<Card>
+    fun getDueCards(): List<Card>
     fun update(card: Card)
 }
