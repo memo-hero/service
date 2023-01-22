@@ -1,9 +1,11 @@
 package com.memohero.infrastructure.repository.dynamodb
 
-import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
-import aws.sdk.kotlin.services.dynamodb.model.*
+import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
+import aws.sdk.kotlin.services.dynamodb.model.ExecuteStatementResponse
+import aws.sdk.kotlin.services.dynamodb.model.QueryResponse
 import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardRepository
+import com.memohero.infrastructure.repository.dynamodb.DynamoMapper.toCard
 import com.memohero.infrastructure.repository.dynamodb.DynamoMapper.toCardList
 import com.memohero.infrastructure.repository.dynamodb.DynamoMapper.toDynamoMap
 import kotlinx.coroutines.runBlocking
@@ -36,29 +38,16 @@ class DynamoCardRepository(
     }
 
     override fun getById(id: UUID): Card? {
-//        val parameters = mutableListOf <AttributeValue>()
-//        parameters.add(AttributeValue.S(id.toString()))
-//        val result: ExecuteStatementResponse
-//        runBlocking {
-//            result = executeStatementPartiQL(client, "SELECT * FROM Cards WHERE card_id=?", parameters)
-//        }
-//
-//        return result.toCard()
-        TODO("Not yet implemented")
-    }
+        // Should avoid using this call due to its impact on DynamoDB
+        val queryStatement = "SELECT * FROM $dbTableName WHERE card_id=?"
+        val queryParameters = mutableListOf(AttributeValue.S(id.toString()))
+        val result: ExecuteStatementResponse
 
-    private suspend fun executeStatementPartiQL(
-        ddb: DynamoDbClient,
-        statementVal: String,
-        parametersVal: List<AttributeValue>
-    ): ExecuteStatementResponse {
-
-        val request = ExecuteStatementRequest {
-            statement = statementVal
-            parameters = parametersVal
+        runBlocking {
+            result = dynamoService.dynamoQueryTable(queryStatement, queryParameters)
         }
 
-        return ddb.executeStatement(request)
+        return result.toCard()
     }
 
     override fun getByTags(userId: String, tags: Set<String>): List<Card> {

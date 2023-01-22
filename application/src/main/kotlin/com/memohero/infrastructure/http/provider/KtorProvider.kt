@@ -23,6 +23,7 @@ object KtorProvider {
                 storeCard(Actions.storeCard)
                 getCards(Actions.getCards)
                 getCardsByTags(Actions.getCardsByTag)
+                studyCard(Actions.studyCard)
 
                 createUser(Actions.createUser)
                 getUserByID(Actions.getUserByID)

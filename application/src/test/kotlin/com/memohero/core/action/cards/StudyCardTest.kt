@@ -26,7 +26,7 @@ internal class StudyCardTest {
 
     @BeforeEach
     fun setUp() {
-        whenever(mockedCardRepository.getById(card.id)).thenReturn(card)
+        whenever(mockedCardRepository.getByUserId(card.userId)).thenReturn(listOf(card))
         whenever(mockedUserRepository.getById(card.userId)).thenReturn(getRandomUser(id = card.userId))
         whenever(spacedRepetitionService.calculateInterval(card.studyMetadata, quality)).thenReturn(cardStudyMetadata)
     }
@@ -45,7 +45,6 @@ internal class StudyCardTest {
 
         studyCard(answer)
 
-        verify(mockedCardRepository, times(1)).getById(card.id)
         verify(mockedUserRepository, times(1)).getById(userId)
         verify(spacedRepetitionService, times(1)).calculateInterval(cardMetadata = card.studyMetadata, answer.quality)
         verify(mockedCardRepository, times(1)).update(updatedCard)

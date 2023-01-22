@@ -1,10 +1,7 @@
 package com.memohero.infrastructure.repository.dynamodb
 
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
-import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
-import aws.sdk.kotlin.services.dynamodb.model.PutItemRequest
-import aws.sdk.kotlin.services.dynamodb.model.QueryRequest
-import aws.sdk.kotlin.services.dynamodb.model.QueryResponse
+import aws.sdk.kotlin.services.dynamodb.model.*
 
 class DynamoDbService(
     private val client: DynamoDbClient
@@ -27,5 +24,14 @@ class DynamoDbService(
         }
 
         return client.query(request)
+    }
+
+    suspend fun dynamoQueryTable(queryStatement: String, queryParameters: List<AttributeValue>): ExecuteStatementResponse {
+        val request = ExecuteStatementRequest {
+            statement = queryStatement
+            parameters = queryParameters
+        }
+
+        return client.executeStatement(request)
     }
 }

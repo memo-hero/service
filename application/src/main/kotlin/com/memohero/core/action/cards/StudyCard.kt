@@ -1,5 +1,6 @@
 package com.memohero.core.action.cards
 
+import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardAnswer
 import com.memohero.core.domain.card.CardRepository
 import com.memohero.core.domain.exceptions.CardNotFoundException
@@ -16,7 +17,7 @@ class StudyCard(
     private val gamificationService: IGamificationService
 ) {
     operator fun invoke(cardAnswer: CardAnswer) {
-        val card = retrieveCard(cardAnswer.cardId)
+        val card = retrieveCard(cardAnswer.userId)
             ?: throw CardNotFoundException(cardAnswer.cardId)
 
         val result = spacedRepetitionService.calculateInterval(card.studyMetadata, cardAnswer.quality)
@@ -30,7 +31,8 @@ class StudyCard(
         cardRepository.update(updatedCard)
     }
 
-    private fun retrieveCard(cardId: UUID) = cardRepository.getById(cardId)
+    private fun retrieveCard(userId: String) =
+        cardRepository.getByUserId(userId).firstOrNull { it.userId == userId }
 
     private fun retrieveUser(userId: String) = userRepository.getById(userId)
 }
