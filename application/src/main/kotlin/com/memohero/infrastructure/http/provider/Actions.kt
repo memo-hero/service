@@ -22,6 +22,10 @@ object Actions {
         GetCards(Repositories.cardRepository)
     }
 
+    val getDueCards by lazy {
+        GetDueCards(Repositories.cardRepository)
+    }
+
     val studyCard by lazy {
         StudyCard(
             Repositories.cardRepository,

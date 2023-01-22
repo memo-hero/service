@@ -53,6 +53,24 @@ fun Route.getCards(getCardsAction: GetCards) {
     }
 }
 
+fun Route.getDueCards(getDueCards: GetDueCards) {
+    get(Path.GET_DUE_CARDS) {
+        try {
+            val userId = call.getParameter("user_id")
+            val tags = call.parameters.getAll("tag")?.toSet() ?: emptySet()
+            call.respond(getDueCards(userId, tags))
+        }
+        catch (ex: UserNotFoundException) {
+            call.response.status(HttpStatusCode.NotFound)
+            call.respond(ex.message!!)
+        }
+        catch (ex: Exception) {
+            call.response.status(HttpStatusCode.InternalServerError)
+            call.respond(ex.message!!)
+        }
+    }
+}
+
 fun Route.getCardById(getCardById: GetCardById) {
     get(Path.GET_CARDS_BY_ID) {
         try {

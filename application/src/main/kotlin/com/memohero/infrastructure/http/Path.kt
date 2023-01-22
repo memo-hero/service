@@ -9,6 +9,7 @@ object Path {
 
     const val STORE_CARD = "/users/{user_id}/cards"
     const val GET_CARDS = "/users/{user_id}/cards"
+    const val GET_DUE_CARDS = "/users/{user_id}/cards/due"
     const val GET_CARDS_BY_ID = "/users/{user_id}/cards/{card_id}"
     const val GET_CARDS_BY_TAGS = "/users/{user_id}/cards/tag"
 

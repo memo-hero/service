@@ -20,6 +20,7 @@ object KtorProvider {
                 getVersion(Actions.getVersion)
 
                 storeCard(Actions.storeCard)
+                getDueCards(Actions.getDueCards)
                 getCards(Actions.getCards)
                 getCardById(Actions.getCardById)
                 getCardsByTags(Actions.getCardsByTag)
