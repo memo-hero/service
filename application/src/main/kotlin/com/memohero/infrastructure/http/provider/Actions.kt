@@ -30,6 +30,10 @@ object Actions {
         )
     }
 
+    val getCardById by lazy {
+        GetCardById(Repositories.cardRepository)
+    }
+
     val getCardsByTag by lazy {
         GetCardsByTag(Repositories.cardRepository)
     }

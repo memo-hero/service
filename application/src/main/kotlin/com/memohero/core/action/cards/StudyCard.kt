@@ -1,14 +1,13 @@
 package com.memohero.core.action.cards
 
-import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardAnswer
 import com.memohero.core.domain.card.CardRepository
 import com.memohero.core.domain.exceptions.CardNotFoundException
 import com.memohero.core.domain.exceptions.UserNotFoundException
+import com.memohero.core.domain.gamification.GamificationResult
 import com.memohero.core.domain.gamification.IGamificationService
 import com.memohero.core.domain.spacedrepetition.ISpacedRepetitionService
 import com.memohero.core.domain.user.UserRepository
-import java.util.*
 
 class StudyCard(
     private val cardRepository: CardRepository,
@@ -16,7 +15,7 @@ class StudyCard(
     private val spacedRepetitionService: ISpacedRepetitionService,
     private val gamificationService: IGamificationService
 ) {
-    operator fun invoke(cardAnswer: CardAnswer) {
+    operator fun invoke(cardAnswer: CardAnswer): GamificationResult {
         val card = retrieveCard(cardAnswer.userId)
             ?: throw CardNotFoundException(cardAnswer.cardId)
 
@@ -25,10 +24,10 @@ class StudyCard(
 
         val user = retrieveUser(cardAnswer.userId) ?: throw UserNotFoundException(cardAnswer.userId)
 
-        if(cardAnswer.quality >= 3) gamificationService.grantExp(user, card.category)
-        else gamificationService.applyDamage(user)
-
         cardRepository.update(updatedCard)
+
+        return if(cardAnswer.quality >= 3) gamificationService.grantExp(user, card.category)
+        else gamificationService.applyDamage(user)
     }
 
     private fun retrieveCard(userId: String) =

@@ -65,6 +65,8 @@ class DynamoCardRepository(
     }
 
     override fun update(card: Card) {
-        TODO("Not yet implemented")
+        runBlocking {
+            dynamoService.dynamoPutItemRequest(dbTableName, card.toDynamoMap())
+        }
     }
 }

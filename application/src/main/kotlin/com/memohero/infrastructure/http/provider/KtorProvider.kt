@@ -22,12 +22,14 @@ object KtorProvider {
 
                 storeCard(Actions.storeCard)
                 getCards(Actions.getCards)
+                getCardById(Actions.getCardById)
                 getCardsByTags(Actions.getCardsByTag)
-                studyCard(Actions.studyCard)
 
                 createUser(Actions.createUser)
                 getUserByID(Actions.getUserByID)
                 updateUser(Actions.updateUser)
+
+                studyCard(Actions.studyCard)
             }
         }
         server.start(wait = true)
