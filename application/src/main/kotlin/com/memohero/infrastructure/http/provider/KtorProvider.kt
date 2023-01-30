@@ -1,5 +1,6 @@
 package com.memohero.infrastructure.http.provider
 
+import cc.rbbl.ktor_health_check.Health
 import com.memohero.core.action.system.GetVersion
 import com.memohero.infrastructure.http.Path
 import io.ktor.serialization.jackson.*
@@ -16,6 +17,7 @@ object KtorProvider {
             install(ContentNegotiation) {
                 jackson()
             }
+            install(Health)
             routing {
                 getVersion(Actions.getVersion)
 
