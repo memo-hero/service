@@ -10,7 +10,8 @@ class LevelAlgorithm : ILevelAlgorithm {
 
         return LevelCheck(
             didLevelUp = currentExp >= expNeeded,
-            expDifference = abs(currentExp - expNeeded)
+            expDifference = abs(currentExp - expNeeded),
+            expNeeded = expNeeded
         )
     }
 

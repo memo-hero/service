@@ -41,7 +41,8 @@ object DynamoMapper {
     private fun CategoryProperties.toDynamoMap(): MutableMap<String, AttributeValue> {
         return mutableMapOf(
             "level" to AttributeValue.N(this.level.toString()),
-            "exp" to AttributeValue.N(this.exp.toString())
+            "exp" to AttributeValue.N(this.exp.toString()),
+            "needed" to AttributeValue.N(this.needed.toString())
         )
     }
 

@@ -13,7 +13,7 @@ class GamificationService(
         val stat = user.stats.categories[category]!!
         val result = levelingAlgorithm.check(stat.level, stat.exp + baseExp)
 
-        val updatedStat = if (result.didLevelUp) stat.copy(level = stat.level + 1, exp = result.expDifference)
+        val updatedStat = if (result.didLevelUp) stat.copy(level = stat.level + 1, exp = result.expDifference, needed = result.expNeeded)
             else stat.copy(exp = stat.exp + baseExp)
 
         user.stats.categories[category] = updatedStat
