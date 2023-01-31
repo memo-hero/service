@@ -125,7 +125,8 @@ object DynamoMapper {
     private fun Map<String, AttributeValue>.toCategoryProperties(): CategoryProperties {
         return CategoryProperties(
             level = this["level"]!!.asN().toInt(),
-            exp = this["exp"]!!.asN().toInt()
+            exp = this["exp"]!!.asN().toInt(),
+            needed = this["needed"]!!.asN().toInt()
         )
     }
 }
