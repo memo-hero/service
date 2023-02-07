@@ -22,6 +22,7 @@ object KtorProvider {
                 getVersion(Actions.getVersion)
 
                 storeCard(Actions.storeCard)
+                updateCard(Actions.updateCard)
                 getDueCards(Actions.getDueCards)
                 getCards(Actions.getCards)
                 getCardById(Actions.getCardById)

@@ -18,6 +18,10 @@ object Actions {
         StoreCard(Repositories.cardRepository)
     }
 
+    val updateCard by lazy {
+        UpdateCard(Repositories.cardRepository)
+    }
+
     val getCards by lazy {
         GetCards(Repositories.cardRepository)
     }

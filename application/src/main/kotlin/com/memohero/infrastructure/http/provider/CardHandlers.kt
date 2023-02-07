@@ -1,6 +1,7 @@
 package com.memohero.infrastructure.http.provider
 
 import com.memohero.core.action.cards.*
+import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardAnswer
 import com.memohero.core.domain.exceptions.CardAlreadyExistsException
 import com.memohero.core.domain.exceptions.CardNotFoundException
@@ -26,8 +27,30 @@ fun Route.storeCard(storeCardAction: StoreCard) {
             call.respond(card)
         }
         catch (ex: CardAlreadyExistsException) {
+            print(ex.message)
             call.response.status(HttpStatusCode.BadRequest)
             call.respond(ex.message)
+        }
+        catch (ex: Exception) {
+            print(ex.message)
+            call.response.status(HttpStatusCode.InternalServerError)
+            call.respond(ex.message!!)
+        }
+    }
+}
+
+fun Route.updateCard(updateCardAction: UpdateCard) {
+    post(Path.UPDATE_CARD) {
+        try {
+            val userId = call.getParameter("user_id")
+            val card =  call.receive<Card>()
+            updateCardAction(card)
+
+            call.response.status(HttpStatusCode.OK)
+        }
+        catch (ex: CardNotFoundException) {
+            call.response.status(HttpStatusCode.NotFound)
+            call.respond(ex.message!!)
         }
         catch (ex: Exception) {
             call.response.status(HttpStatusCode.InternalServerError)
