@@ -8,7 +8,8 @@ import com.memohero.core.domain.exceptions.CardNotFoundException
 import com.memohero.core.domain.exceptions.InvalidParameterException
 import com.memohero.core.domain.exceptions.UserNotFoundException
 import com.memohero.infrastructure.http.Path
-import com.memohero.infrastructure.http.handler.CardJson
+import com.memohero.infrastructure.http.handler.NewCardJson
+import com.memohero.infrastructure.http.handler.UpdatedCardJson
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -20,7 +21,7 @@ fun Route.storeCard(storeCardAction: StoreCard) {
     post(Path.STORE_CARD) {
         try {
             val userId = call.getParameter("user_id")
-            val card =  call.receive<CardJson>().toCard(userId = userId)
+            val card =  call.receive<NewCardJson>().toCard(userId = userId)
             storeCardAction(card)
 
             call.response.status(HttpStatusCode.OK)

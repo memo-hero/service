@@ -3,7 +3,7 @@ package com.memohero.infrastructure.http.handler
 import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.user.Category
 
-data class CardJson(
+data class NewCardJson(
     val front: String,
     val back: String,
     val category: String,
