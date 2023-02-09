@@ -9,7 +9,6 @@ import com.memohero.core.domain.exceptions.InvalidParameterException
 import com.memohero.core.domain.exceptions.UserNotFoundException
 import com.memohero.infrastructure.http.Path
 import com.memohero.infrastructure.http.handler.NewCardJson
-import com.memohero.infrastructure.http.handler.UpdatedCardJson
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
