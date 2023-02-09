@@ -1,17 +1,19 @@
 package com.memohero.core.domain.gamification
 
 import kotlin.math.abs
+import kotlin.math.exp
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
 class LevelAlgorithm : ILevelAlgorithm {
     override fun check(currentLevel: Int, currentExp: Int): LevelCheck {
         val expNeeded = getExpNeededToLevelUp(currentLevel)
+        val didLevelUp = currentExp >= expNeeded
 
         return LevelCheck(
-            didLevelUp = currentExp >= expNeeded,
+            didLevelUp = didLevelUp,
             expDifference = abs(currentExp - expNeeded),
-            expNeeded = expNeeded
+            expNeeded = if (didLevelUp) getExpNeededToLevelUp(currentLevel + 1) else expNeeded
         )
     }
 

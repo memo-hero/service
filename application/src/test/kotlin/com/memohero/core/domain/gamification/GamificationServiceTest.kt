@@ -48,7 +48,7 @@ class GamificationServiceTest {
                 1,
                 0,
                 getGamificationResult(
-                    category = getRandomCategoryProperties(level = 1, exp = 10)
+                    category = getRandomCategoryProperties(level = 1, exp = 10, needed = 65)
                 ),
             ),
 
@@ -57,7 +57,7 @@ class GamificationServiceTest {
                 2,
                 30,
                 getGamificationResult(
-                    category = getRandomCategoryProperties(level = 2, exp = 40)
+                    category = getRandomCategoryProperties(level = 2, exp = 40, needed = 103)
                 ),
             ),
 
@@ -67,7 +67,7 @@ class GamificationServiceTest {
                 65,
                 getGamificationResult(
                     didLevelUp = true,
-                    category = getRandomCategoryProperties(level = 2, exp = 0)
+                    category = getRandomCategoryProperties(level = 2, exp = 0, needed = 143)
                 ),
             ),
 
@@ -77,7 +77,7 @@ class GamificationServiceTest {
                 70,
                 getGamificationResult(
                     didLevelUp = true,
-                    category = getRandomCategoryProperties(level = 2, exp = 5)
+                    category = getRandomCategoryProperties(level = 2, exp = 5, needed = 138)
                 ),
             ),
         )
@@ -94,13 +94,15 @@ class GamificationServiceTest {
     private fun getUserWithSpecifiedExp(
         category: Category = Category.values().random(),
         level: Int = 1,
-        exp: Int = 0
+        exp: Int = 0,
+        needed: Int = 75
     ) = getRandomUser(
         stats = getRandomStats(
             categories = mutableMapOf(
                 Category.ARTS to getRandomCategoryProperties(
                     level = level,
                     exp = exp,
+                    needed = needed,
                 )
             )
         )

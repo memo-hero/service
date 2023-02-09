@@ -32,7 +32,9 @@ fun getRandomStats(
 fun getRandomCategoryProperties(
     level: Int = getRandomInt(1, 10),
     exp: Int = getRandomInt(0, 75),
+    needed: Int = getRandomInt(0, 75),
 ) = CategoryProperties(
     level = level,
     exp = exp,
+    needed = needed,
 )

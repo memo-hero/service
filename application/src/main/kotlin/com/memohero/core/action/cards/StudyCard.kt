@@ -8,6 +8,7 @@ import com.memohero.core.domain.gamification.GamificationResult
 import com.memohero.core.domain.gamification.IGamificationService
 import com.memohero.core.domain.spacedrepetition.ISpacedRepetitionService
 import com.memohero.core.domain.user.UserRepository
+import java.util.*
 
 class StudyCard(
     private val cardRepository: CardRepository,
@@ -16,7 +17,7 @@ class StudyCard(
     private val gamificationService: IGamificationService
 ) {
     operator fun invoke(cardAnswer: CardAnswer): GamificationResult {
-        val card = retrieveCard(cardAnswer.userId)
+        val card = retrieveCard(cardAnswer.cardId)
             ?: throw CardNotFoundException(cardAnswer.cardId)
 
         val result = spacedRepetitionService.calculateInterval(card.studyMetadata, cardAnswer.quality)
@@ -30,8 +31,7 @@ class StudyCard(
         else gamificationService.applyDamage(user)
     }
 
-    private fun retrieveCard(userId: String) =
-        cardRepository.getByUserId(userId).firstOrNull { it.userId == userId }
+    private fun retrieveCard(userId: UUID) = cardRepository.getById(userId)
 
     private fun retrieveUser(userId: String) = userRepository.getById(userId)
 }

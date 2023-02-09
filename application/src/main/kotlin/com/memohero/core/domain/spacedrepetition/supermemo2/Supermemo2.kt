@@ -14,8 +14,10 @@ object Supermemo2 {
         val updatedRepetition = updateRepetition(quality, repetition)
         val updatedEaseFactor = calculateEaseFactor(quality, easeFactor)
 
+        // We need to cap the interval, otherwise it might increase exponentially.
+        // A year should be enough
         return Supermemo2Result(
-            interval = updatedInterval,
+            interval = if(updatedInterval <= 365) updatedInterval else 365,
             repetition = updatedRepetition,
             easeFactor = updatedEaseFactor,
         )
