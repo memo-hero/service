@@ -23,7 +23,7 @@ class GamificationService(
         return GamificationResult(
             didLevelUp = result.didLevelUp,
             didGetKnockedOut = false,
-            category = updatedStat,
+            category = mapOf(category to updatedStat),
             userStats = user.stats,
         )
     }

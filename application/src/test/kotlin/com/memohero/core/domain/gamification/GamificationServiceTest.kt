@@ -48,7 +48,7 @@ class GamificationServiceTest {
                 1,
                 0,
                 getGamificationResult(
-                    category = getRandomCategoryProperties(level = 1, exp = 10, needed = 65)
+                    category = mapOf(Category.values().random() to getRandomCategoryProperties(level = 1, exp = 10, needed = 65))
                 ),
             ),
 
@@ -57,7 +57,7 @@ class GamificationServiceTest {
                 2,
                 30,
                 getGamificationResult(
-                    category = getRandomCategoryProperties(level = 2, exp = 40, needed = 103)
+                    category = mapOf(Category.values().random() to getRandomCategoryProperties(level = 2, exp = 40, needed = 103))
                 ),
             ),
 
@@ -67,7 +67,7 @@ class GamificationServiceTest {
                 65,
                 getGamificationResult(
                     didLevelUp = true,
-                    category = getRandomCategoryProperties(level = 2, exp = 0, needed = 143)
+                    category = mapOf(Category.values().random() to getRandomCategoryProperties(level = 2, exp = 0, needed = 143))
                 ),
             ),
 
@@ -77,7 +77,7 @@ class GamificationServiceTest {
                 70,
                 getGamificationResult(
                     didLevelUp = true,
-                    category = getRandomCategoryProperties(level = 2, exp = 5, needed = 138)
+                    category = mapOf(Category.values().random() to getRandomCategoryProperties(level = 2, exp = 5, needed = 138))
                 ),
             ),
         )
@@ -112,7 +112,7 @@ class GamificationServiceTest {
 fun getGamificationResult(
     didLevelUp: Boolean = false,
     didGetKnockedOut: Boolean = false,
-    category: CategoryProperties = getRandomCategoryProperties(),
+    category: Map<Category, CategoryProperties> = mapOf(Category.values().random() to getRandomCategoryProperties()),
     userStats: Stats = getRandomStats(),
 ) = GamificationResult(
     didLevelUp = didLevelUp,

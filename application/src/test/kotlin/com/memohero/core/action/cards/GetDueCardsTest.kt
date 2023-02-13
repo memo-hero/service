@@ -16,7 +16,7 @@ class GetDueCardsTest {
     private val card = getRandomNewCard(tags = mutableSetOf("tagA"))
     private val cards = listOf(
         card,
-        getRandomNewCard(dueDate = card.dueDate.plus(1)),
+        getRandomNewCard(dueDate = card.dueDate.plus(2)),
         getRandomNewCard(dueDate = card.dueDate.minus(1), tags = mutableSetOf("tagB")),
     )
 
