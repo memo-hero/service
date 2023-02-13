@@ -8,7 +8,7 @@ class GetDueCards(
     private val cardRepository: CardRepository
 ) {
     operator fun invoke(userId: String, tags: Set<String>): List<Card> {
-        val currentDate = LocalDate.now().toEpochDay()
+        val currentDate = LocalDate.now().toEpochDay() + 1
         val dueCards = cardRepository.getByUserId(userId).filter { card -> card.dueDate <= currentDate}
 
         if (!tags.any()) {
