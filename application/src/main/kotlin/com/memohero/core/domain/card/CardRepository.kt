@@ -9,4 +9,5 @@ interface CardRepository {
     fun getByTags(userId: String, tags: Set<String>): List<Card>
     fun getDueCards(): List<Card>
     fun update(card: Card)
+    fun deleteCard(userId: String, cardId: String)
 }

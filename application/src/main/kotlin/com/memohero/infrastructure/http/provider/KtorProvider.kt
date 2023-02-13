@@ -27,6 +27,7 @@ object KtorProvider {
                 getCards(Actions.getCards)
                 getCardById(Actions.getCardById)
                 getCardsByTags(Actions.getCardsByTag)
+                deleteCard(Actions.deleteCard)
 
                 createUser(Actions.createUser)
                 getUserByID(Actions.getUserByID)

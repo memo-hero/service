@@ -69,4 +69,10 @@ class DynamoCardRepository(
             dynamoService.dynamoPutItemRequest(dbTableName, card.toDynamoMap())
         }
     }
+
+    override fun deleteCard(userId: String, cardId: String) {
+        runBlocking {
+            dynamoService.dynamoDeleteItemRequest(dbTableName, "card_id", cardId, "user_id", userId)
+        }
+    }
 }

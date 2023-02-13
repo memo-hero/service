@@ -28,4 +28,8 @@ class InMemoryCardRepository: CardRepository {
     override fun update(card: Card) {
         TODO("Not yet implemented")
     }
+
+    override fun deleteCard(userId: String, cardId: String) {
+        TODO("Not yet implemented")
+    }
 }

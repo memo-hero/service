@@ -43,4 +43,22 @@ class DynamoDbService(
 
         return client.getItem(request)
     }
+
+    suspend fun dynamoDeleteItemRequest(
+        dbTableName: String,
+        keyName: String,
+        keyValue: String,
+        sortKeyName: String,
+        sortKeyValue: String
+    ): DeleteItemResponse {
+        val request = DeleteItemRequest {
+            tableName = dbTableName
+            key = mutableMapOf(
+                keyName to AttributeValue.S(keyValue),
+                sortKeyName to AttributeValue.S(sortKeyValue)
+            )
+        }
+
+        return client.deleteItem(request)
+    }
 }

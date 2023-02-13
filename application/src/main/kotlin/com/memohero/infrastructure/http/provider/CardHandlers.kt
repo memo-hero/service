@@ -148,7 +148,23 @@ fun Route.studyCard(studyCard: StudyCard) {
             call.response.status(HttpStatusCode.NotFound)
             call.respond(ex.message!!)
         }
-        catch (ex: CardNotFoundException) {
+        catch (ex: Exception) {
+            call.response.status(HttpStatusCode.InternalServerError)
+            call.respond(ex.message!!)
+        }
+    }
+}
+
+fun Route.deleteCard(deleteCard: DeleteCard) {
+    delete(Path.DELETE_CARD) {
+        try {
+            val userId = call.getParameter("user_id")
+            val cardId = call.getParameter("card_id")
+
+            val result = deleteCard(userId, cardId)
+            call.respond(result)
+        }
+        catch (ex: UserNotFoundException) {
             call.response.status(HttpStatusCode.NotFound)
             call.respond(ex.message!!)
         }

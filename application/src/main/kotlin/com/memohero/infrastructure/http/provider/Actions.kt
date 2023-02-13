@@ -47,6 +47,10 @@ object Actions {
         GetCardsByTag(Repositories.cardRepository)
     }
 
+    val deleteCard by lazy {
+        DeleteCard(Repositories.cardRepository)
+    }
+
     val createUser by lazy {
         CreateUser(Repositories.userRepository)
     }
