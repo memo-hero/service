@@ -3,6 +3,7 @@ package com.memohero.infrastructure.http.provider
 import cc.rbbl.ktor_health_check.Health
 import com.memohero.core.action.system.GetVersion
 import com.memohero.core.action.system.PushLogs
+import com.memohero.core.domain.exceptions.InvalidParameterException
 import com.memohero.core.domain.logging.Log
 import com.memohero.core.domain.logging.LogSeverity
 import com.memohero.infrastructure.Services
@@ -55,8 +56,9 @@ object KtorProvider {
     private fun Route.pushLogs(pushLogsActions: PushLogs) {
         post(Path.PUSH_LOGS) {
             try {
+                val userId = call.parameters["user_id"] ?: throw InvalidParameterException("Missing parameter userId")
                 val logs = call.receive<List<Log>>()
-                pushLogsActions(logs)
+                pushLogsActions(userId, logs)
                 call.response.status(HttpStatusCode.OK)
             }
             catch (ex: Exception) {
