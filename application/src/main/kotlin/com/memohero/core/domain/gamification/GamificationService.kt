@@ -18,6 +18,8 @@ class GamificationService(
 
         user.stats.categories[category] = updatedStat
 
+        user.stats.health += if(user.stats.health == 100) 0 else baseDamage
+
         userRepository.updateUser(user)
 
         return GamificationResult(

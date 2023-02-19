@@ -1,7 +1,7 @@
 package com.memohero.core.domain.user
 
 data class Stats(
-    val health: Int = 100,
+    var health: Int = 100,
     val categories: MutableMap<Category, CategoryProperties> = mutableMapOf(
         Category.ARTS to CategoryProperties(),
         Category.COMPUTERS to CategoryProperties(),

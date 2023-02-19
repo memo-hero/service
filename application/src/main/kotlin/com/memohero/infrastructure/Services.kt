@@ -4,8 +4,12 @@ import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import com.memohero.core.domain.gamification.GamificationService
 import com.memohero.core.domain.gamification.IGamificationService
 import com.memohero.core.domain.gamification.LevelAlgorithm
+import com.memohero.core.domain.logging.ILogger
 import com.memohero.core.domain.spacedrepetition.ISpacedRepetitionService
 import com.memohero.core.domain.spacedrepetition.SpacedRepetitionService
+import com.memohero.infrastructure.logger.loki.LokiClient
+import com.memohero.infrastructure.logger.loki.LokiConfiguration
+import com.memohero.infrastructure.logger.loki.LokiLoggerService
 import com.memohero.infrastructure.repository.dynamodb.DynamoDbService
 
 object Services {
@@ -22,5 +26,10 @@ object Services {
     val gamificationService: IGamificationService by lazy {
         val levelAlgorithm = LevelAlgorithm()
         GamificationService(levelAlgorithm, Repositories.userRepository)
+    }
+
+    val loggerService: ILogger by lazy {
+        val client = LokiClient(LokiConfiguration())
+        LokiLoggerService(client)
     }
 }
