@@ -2,6 +2,7 @@ package com.memohero.infrastructure.http
 
 object Path {
     const val GET_VERSION = "/version"
+    const val PUSH_LOGS = "/users/{user_id}/logs"
 
     const val CREATE_USER = "/users"
     const val GET_USER_BY_ID = "/users/{user_id}"

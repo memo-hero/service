@@ -14,6 +14,10 @@ class LokiLoggerService(
         client.push(LokiLog.fromLog(log))
     }
 
+    override suspend fun log(logs: List<Log>) {
+        client.push(LokiLog.fromLogs(logs))
+    }
+
     override suspend fun log(message: String, severity: LogSeverity) {
         val timestamp = Instant.now().epochSecond.toString() + Instant.now().nano.toString()
         val log = Log(
