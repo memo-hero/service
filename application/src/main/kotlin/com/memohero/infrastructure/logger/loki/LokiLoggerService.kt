@@ -7,11 +7,13 @@ import com.memohero.core.domain.logging.LogSource
 import java.time.Instant
 
 class LokiLoggerService(
+    private val configuration: LokiConfiguration,
     private val client: LokiClient,
 ) : ILogger {
 
     override suspend fun log(log: Log) {
-        client.push(LokiLog.fromLog(log))
+        if (log.severity >= configuration.getMinimumSeverity())
+            client.push(LokiLog.fromLog(log))
     }
 
     override suspend fun log(logs: List<Log>) {

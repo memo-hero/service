@@ -7,10 +7,13 @@ import com.memohero.core.domain.exceptions.CardAlreadyExistsException
 import com.memohero.core.domain.exceptions.CardNotFoundException
 import com.memohero.core.domain.exceptions.InvalidParameterException
 import com.memohero.core.domain.exceptions.UserNotFoundException
+import com.memohero.core.domain.logging.LogSeverity
+import com.memohero.infrastructure.Services
 import com.memohero.infrastructure.http.Path
 import com.memohero.infrastructure.http.handler.NewCardJson
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.logging.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -42,6 +45,8 @@ fun Route.storeCard(storeCardAction: StoreCard) {
 fun Route.updateCard(updateCardAction: UpdateCard) {
     post(Path.UPDATE_CARD) {
         try {
+            val test = call.request.toLogString()
+            Services.loggerService.log(test, LogSeverity.INFO)
             val userId = call.getParameter("user_id")
             val card =  call.receive<Card>()
             updateCardAction(card)
@@ -79,6 +84,8 @@ fun Route.getCards(getCardsAction: GetCards) {
 fun Route.getDueCards(getDueCards: GetDueCards) {
     get(Path.GET_DUE_CARDS) {
         try {
+            val test = call.request.toLogString()
+            Services.loggerService.log(test, LogSeverity.INFO)
             val userId = call.getParameter("user_id")
             val tags = call.parameters.getAll("tag")?.toSet() ?: emptySet()
             call.respond(getDueCards(userId, tags))

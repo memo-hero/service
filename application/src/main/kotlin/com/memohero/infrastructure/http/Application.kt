@@ -8,7 +8,10 @@ object Application {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        runBlocking { Services.loggerService.log("Starting service") }
+        runBlocking {
+            Services.configRepository.initialize()
+            Services.loggerService.log("Starting service")
+        }
         KtorProvider.start()
     }
 }
