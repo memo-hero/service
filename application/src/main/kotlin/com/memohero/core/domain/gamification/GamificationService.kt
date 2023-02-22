@@ -9,7 +9,7 @@ class GamificationService(
     private val baseExp = 10
     private val baseDamage = 10
 
-    override fun grantExp(user: User, category: Category): GamificationResult {
+    override suspend fun grantExp(user: User, category: Category): GamificationResult {
         val stat = user.stats.categories[category]!!
         val result = levelingAlgorithm.check(stat.level, stat.exp + baseExp)
 
@@ -30,7 +30,7 @@ class GamificationService(
         )
     }
 
-    override fun applyDamage(user: User): GamificationResult {
+    override suspend fun applyDamage(user: User): GamificationResult {
         val newHealth = if (user.stats.health <= baseDamage) 0
         else user.stats.health - 10
         val updatedUser = user.copy(stats = user.stats.copy(health = newHealth))

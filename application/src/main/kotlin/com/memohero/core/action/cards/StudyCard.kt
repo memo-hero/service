@@ -16,7 +16,7 @@ class StudyCard(
     private val spacedRepetitionService: ISpacedRepetitionService,
     private val gamificationService: IGamificationService
 ) {
-    operator fun invoke(cardAnswer: CardAnswer): GamificationResult {
+    suspend operator fun invoke(cardAnswer: CardAnswer): GamificationResult {
         val card = retrieveCard(cardAnswer.cardId)
             ?: throw CardNotFoundException(cardAnswer.cardId)
 
@@ -31,7 +31,7 @@ class StudyCard(
         else gamificationService.applyDamage(user)
     }
 
-    private fun retrieveCard(userId: UUID) = cardRepository.getById(userId)
+    private suspend fun retrieveCard(userId: UUID) = cardRepository.getById(userId)
 
-    private fun retrieveUser(userId: String) = userRepository.getById(userId)
+    private suspend fun retrieveUser(userId: String) = userRepository.getById(userId)
 }

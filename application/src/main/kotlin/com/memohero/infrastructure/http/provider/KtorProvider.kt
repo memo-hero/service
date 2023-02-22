@@ -12,6 +12,7 @@ import io.ktor.http.*
 import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
+import io.ktor.server.logging.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
@@ -49,6 +50,7 @@ object KtorProvider {
 
     private fun Route.getVersion(getVersionAction: GetVersion) {
         get(Path.GET_VERSION) {
+            Services.loggerService.log(call.request.toLogString())
             call.respond(getVersionAction())
         }
     }
@@ -56,10 +58,10 @@ object KtorProvider {
     private fun Route.pushLogs(pushLogsActions: PushLogs) {
         post(Path.PUSH_LOGS) {
             try {
+                Services.loggerService.log(call.request.toLogString())
                 val userId = call.parameters["user_id"] ?: throw InvalidParameterException("Missing parameter userId")
                 val logs = call.receive<List<Log>>()
                 pushLogsActions(userId, logs)
-                call.response.status(HttpStatusCode.OK)
             }
             catch (ex: Exception) {
                 val message = "${ ex.message ?: "Error when pushing logs" } stacktrace=${ ex.stackTraceToString() }"

@@ -5,7 +5,5 @@ import com.memohero.core.domain.card.CardRepository
 class DeleteCard(
     private val cardRepository: CardRepository
 ) {
-    operator fun invoke(userId: String, cardId: String) {
-        cardRepository.deleteCard(userId, cardId)
-    }
+    suspend operator fun invoke(userId: String, cardId: String) = cardRepository.deleteCard(userId, cardId)
 }

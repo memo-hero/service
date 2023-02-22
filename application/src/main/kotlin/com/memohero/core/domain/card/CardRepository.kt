@@ -3,11 +3,10 @@ package com.memohero.core.domain.card
 import java.util.*
 
 interface CardRepository {
-    fun add(card: Card)
-    fun getByUserId(id: String): List<Card>
-    fun getById(id: UUID): Card?
-    fun getByTags(userId: String, tags: Set<String>): List<Card>
-    fun getDueCards(): List<Card>
-    fun update(card: Card)
-    fun deleteCard(userId: String, cardId: String)
+    suspend fun add(card: Card)
+    suspend fun getByUserId(id: String): List<Card>
+    suspend fun getById(id: UUID): Card?
+    suspend fun getByTags(userId: String, tags: Set<String>): List<Card>
+    suspend fun update(card: Card)
+    suspend fun deleteCard(userId: String, cardId: String)
 }

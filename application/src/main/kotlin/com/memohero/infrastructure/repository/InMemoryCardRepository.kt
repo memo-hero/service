@@ -7,29 +7,25 @@ import java.util.*
 class InMemoryCardRepository: CardRepository {
     private val storedCards = mutableListOf<Card>()
 
-    override fun add(card: Card) {
+    override suspend fun add(card: Card) {
         storedCards.add(card)
     }
 
-    override fun getByUserId(id: String) =
+    override suspend fun getByUserId(id: String) =
         storedCards.filter { card -> card.userId == id }
 
-    override fun getById(id: UUID) =
+    override suspend fun getById(id: UUID) =
         storedCards.firstOrNull { it.id == id }
 
-    override fun getByTags(userId: String, tags: Set<String>): List<Card> {
+    override suspend fun getByTags(userId: String, tags: Set<String>): List<Card> {
         TODO("Not yet implemented")
     }
 
-    override fun getDueCards(): List<Card> {
+    override suspend fun update(card: Card) {
         TODO("Not yet implemented")
     }
 
-    override fun update(card: Card) {
-        TODO("Not yet implemented")
-    }
-
-    override fun deleteCard(userId: String, cardId: String) {
+    override suspend fun deleteCard(userId: String, cardId: String) {
         TODO("Not yet implemented")
     }
 }

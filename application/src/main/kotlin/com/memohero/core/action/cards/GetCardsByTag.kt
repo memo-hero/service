@@ -6,7 +6,5 @@ import com.memohero.core.domain.card.CardRepository
 class GetCardsByTag(
     private val cardRepository: CardRepository
 ) {
-    operator fun invoke(userId: String, tags: Set<String>): List<Card> {
-        return cardRepository.getByTags(userId, tags)
-    }
+    suspend operator fun invoke(userId: String, tags: Set<String>): List<Card> = cardRepository.getByTags(userId, tags)
 }

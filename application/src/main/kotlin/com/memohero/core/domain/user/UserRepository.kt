@@ -1,8 +1,8 @@
 package com.memohero.core.domain.user
 
 interface UserRepository {
-    fun storeUser(user: User)
-    fun getById(id: String): User?
-    fun checkUserExists(user: User): Boolean
-    fun updateUser(user: User)
+    suspend fun storeUser(user: User)
+    suspend fun getById(id: String): User?
+    suspend fun checkUserExists(user: User): Boolean
+    suspend fun updateUser(user: User)
 }

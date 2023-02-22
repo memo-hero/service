@@ -7,7 +7,5 @@ import com.memohero.core.domain.user.UserRepository
 class GetUserByID(
     private val userRepository: UserRepository
 ) {
-    operator fun invoke(id: String): User {
-        return userRepository.getById(id) ?: throw UserNotFoundException(id)
-    }
+    suspend operator fun invoke(id: String): User = userRepository.getById(id) ?: throw UserNotFoundException(id)
 }
