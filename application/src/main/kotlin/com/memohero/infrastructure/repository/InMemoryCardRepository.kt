@@ -22,10 +22,11 @@ class InMemoryCardRepository: CardRepository {
     }
 
     override suspend fun update(card: Card) {
-        TODO("Not yet implemented")
+        storedCards.remove(getById(card.id))
+        storedCards.add(card)
     }
 
     override suspend fun deleteCard(userId: String, cardId: String) {
-        TODO("Not yet implemented")
+        storedCards.remove(getById(UUID.fromString(cardId)))
     }
 }
