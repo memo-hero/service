@@ -1,5 +1,6 @@
 package com.memohero.core.domain.gamification
 
+import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.user.*
 
 class GamificationService(
@@ -9,23 +10,23 @@ class GamificationService(
     private val baseExp = 10
     private val baseDamage = 10
 
-    override suspend fun grantExp(user: User, category: Category): GamificationResult {
-        val stat = user.stats.categories[category]!!
+    override suspend fun grantExp(user: User, updatedCard: Card): GamificationResult {
+        val stat = user.stats.categories[updatedCard.category]!!
         val result = levelingAlgorithm.check(stat.level, stat.exp + baseExp)
 
         val updatedStat = if (result.didLevelUp) stat.copy(level = stat.level + 1, exp = result.expDifference, needed = result.expNeeded)
             else stat.copy(exp = stat.exp + baseExp)
 
-        user.stats.categories[category] = updatedStat
+        user.stats.categories[updatedCard.category] = updatedStat
 
         user.stats.health += if(user.stats.health == 100) 0 else baseDamage
 
-        userRepository.updateUser(user)
+        userRepository.makePutTransaction(user = user, card = updatedCard)
 
         return GamificationResult(
             didLevelUp = result.didLevelUp,
             didGetKnockedOut = false,
-            category = mapOf(category to updatedStat),
+            category = mapOf(updatedCard.category to updatedStat),
             userStats = user.stats,
         )
     }

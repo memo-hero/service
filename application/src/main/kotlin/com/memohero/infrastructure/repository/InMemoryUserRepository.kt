@@ -1,5 +1,6 @@
 package com.memohero.infrastructure.repository
 
+import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.user.User
 import com.memohero.core.domain.user.UserRepository
 
@@ -19,5 +20,9 @@ class InMemoryUserRepository: UserRepository {
     override suspend fun updateUser(user: User) {
         storedUsers.remove(getById(user.id))
         storedUsers.add(user)
+    }
+
+    override suspend fun makePutTransaction(user: User, card: Card) {
+
     }
 }

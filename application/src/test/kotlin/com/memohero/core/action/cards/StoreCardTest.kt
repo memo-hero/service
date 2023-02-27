@@ -12,7 +12,7 @@ class StoreCardTest {
     private val newCard = getRandomNewCard()
 
     @Test
-    fun `should store new cards`() {
+    suspend fun `should store new cards`() {
         val storeCard = StoreCard(mockedRepository)
 
         storeCard(newCard)

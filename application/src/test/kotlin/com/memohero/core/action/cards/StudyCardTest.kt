@@ -25,14 +25,14 @@ internal class StudyCardTest {
     private val card = getRandomNewCard()
 
     @BeforeEach
-    fun setUp() {
+    suspend fun setUp() {
         whenever(mockedCardRepository.getById(card.id)).thenReturn(card)
         whenever(mockedUserRepository.getById(card.userId)).thenReturn(getRandomUser(id = card.userId))
         whenever(spacedRepetitionService.calculateInterval(card.studyMetadata, quality)).thenReturn(cardStudyMetadata)
     }
 
     @Test
-    fun `studying a card should update a card's interval`() {
+    suspend fun `studying a card should update a card's interval`() {
         val userId = card.userId
         val answer = CardAnswer(userId = userId, cardId = card.id, quality)
         val updatedCard = card.updateMetadata(cardStudyMetadata)

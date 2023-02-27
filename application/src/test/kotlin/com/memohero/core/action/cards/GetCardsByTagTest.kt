@@ -15,12 +15,12 @@ class GetCardsByTagTest {
     private val tags = setOf(tag)
 
     @BeforeEach
-    fun setUp() {
+    suspend fun setUp() {
         whenever(mockedRepository.getByTags(card.userId, tags)).thenReturn(listOf(card))
     }
 
     @Test
-    fun `should return all cards for a given tag`() {
+    suspend fun `should return all cards for a given tag`() {
         val getByTags = GetCardsByTag(mockedRepository)
 
         val cards = getByTags(card.userId, tags)

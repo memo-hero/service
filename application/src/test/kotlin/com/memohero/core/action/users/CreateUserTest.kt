@@ -16,12 +16,12 @@ class CreateUserTest {
     private val user = getRandomUser()
 
     @BeforeEach
-    internal fun setUp() {
+    internal suspend fun setUp() {
         whenever(mockedRepository.checkUserExists(user)).thenReturn(false)
     }
 
     @Test
-    fun `Should store an user`() {
+    suspend fun `Should store an user`() {
         val createUser = CreateUser(mockedRepository)
 
         createUser(user)
@@ -31,7 +31,7 @@ class CreateUserTest {
     }
 
     @Test
-    fun `Should not store an user if it is already stored`() {
+    suspend fun `Should not store an user if it is already stored`() {
         val createUser = CreateUser(mockedRepository)
         whenever(mockedRepository.checkUserExists(user)).thenReturn(true)
 

@@ -13,12 +13,12 @@ class GetCardsTest {
     private val card = getRandomNewCard()
 
     @BeforeEach
-    fun setUp() {
+    suspend fun setUp() {
         whenever(mockedRepository.getByUserId(card.userId)).thenReturn(listOf(card))
     }
 
     @Test
-    fun `Should return all cards for a given user`() {
+    suspend fun `Should return all cards for a given user`() {
         val getCards = GetCards(mockedRepository)
 
         val result = getCards(card.userId)
@@ -27,7 +27,7 @@ class GetCardsTest {
     }
 
     @Test
-    fun `Should not return cards of a different user`() {
+    suspend fun `Should not return cards of a different user`() {
         val getCards = GetCards(mockedRepository)
 
         val result = getCards("some other id")

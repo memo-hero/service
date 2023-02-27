@@ -21,19 +21,19 @@ class GetDueCardsTest {
     )
 
     @BeforeEach
-    internal fun setUp() {
+    internal suspend fun setUp() {
         whenever(mockedRepository.getByUserId(user.id)).thenReturn(cards)
     }
 
     @Test
-    fun `should return due cards for current day or previous`() {
+    suspend fun `should return due cards for current day or previous`() {
         val cards = getDueCards(user.id, emptySet())
 
         assertThat(cards.count()).isEqualTo(2)
     }
 
     @Test
-    fun `should return due cards for the given tags`() {
+    suspend fun `should return due cards for the given tags`() {
         val cards = getDueCards(user.id, setOf("tagB"))
 
         assertThat(cards.count()).isEqualTo(1)

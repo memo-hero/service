@@ -5,6 +5,7 @@ import com.memohero.core.domain.user.CategoryProperties
 import com.memohero.core.domain.user.Stats
 import com.memohero.core.domain.user.UserRepository
 import com.memohero.tools.mothers.getRandomCategoryProperties
+import com.memohero.tools.mothers.getRandomNewCard
 import com.memohero.tools.mothers.getRandomStats
 import com.memohero.tools.mothers.getRandomUser
 import org.assertj.core.api.Assertions.assertThat
@@ -17,14 +18,15 @@ class GamificationServiceTest {
     private val mockedLevelingAlgorithm: ILevelAlgorithm = LevelAlgorithm()
     private val mockedUserRepository: UserRepository = mock()
     private val gamificationService = GamificationService(mockedLevelingAlgorithm, mockedUserRepository)
+    private val randomCard = getRandomNewCard(category = Category.ARTS)
 
     @ParameterizedTest
     @MethodSource("levelAndExp")
-    fun `should properly assign exp and leveling`(currentLevel: Int, currentExp: Int, gamificationResult: GamificationResult) {
-        val studiedCategory = Category.ARTS
-        val user = getUserWithSpecifiedExp(category = studiedCategory, exp = currentExp, level = currentLevel)
+    suspend fun `should properly assign exp and leveling`(currentLevel: Int, currentExp: Int, gamificationResult: GamificationResult) {
+//        val studiedCategory = Category.ARTS
+        val user = getUserWithSpecifiedExp(category = randomCard.category, exp = currentExp, level = currentLevel)
 
-        val result = gamificationService.grantExp(user = user, category = studiedCategory)
+        val result = gamificationService.grantExp(user = user, updatedCard = randomCard)
 
         assertThat(result.didLevelUp).isEqualTo(gamificationResult.didLevelUp)
         assertThat(result.didGetKnockedOut).isEqualTo(gamificationResult.didGetKnockedOut)
@@ -32,7 +34,7 @@ class GamificationServiceTest {
 
     @ParameterizedTest
     @MethodSource("healthTests")
-    fun `should update user's health when answering wrong`(currentHealth: Int, newHealth: Int, didGetKnockedOut: Boolean) {
+    suspend fun `should update user's health when answering wrong`(currentHealth: Int, newHealth: Int, didGetKnockedOut: Boolean) {
         val user = getRandomUser(stats = getRandomStats(health = currentHealth))
 
         val result = gamificationService.applyDamage(user)

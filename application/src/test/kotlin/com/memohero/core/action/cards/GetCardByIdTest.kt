@@ -16,12 +16,12 @@ class GetCardByIdTest {
     private val user = getRandomUser(id = card.userId)
 
     @BeforeEach
-    internal fun setUp() {
+    internal suspend fun setUp() {
         whenever(mockedRepository.getByUserId(user.id)).thenReturn(listOf(card))
     }
 
     @Test
-    fun `should return a card`() {
+    suspend fun `should return a card`() {
         val result = getCardById(user.id, card.id.toString())
 
         assertThat(result).isEqualTo(card)

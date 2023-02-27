@@ -2,6 +2,7 @@ package com.memohero.infrastructure.repository.dynamodb
 
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
 import aws.sdk.kotlin.services.dynamodb.model.GetItemResponse
+import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.logging.LogSeverity
 import com.memohero.core.domain.user.User
 import com.memohero.core.domain.user.UserRepository
@@ -35,6 +36,11 @@ class DynamoUserRepository(
     override suspend fun updateUser(user: User) {
         Services.loggerService.log("updating_user=${user.id}")
         dynamoService.dynamoPutItemRequest(dbTableName, user.toDynamoMap())
+    }
+
+    override suspend fun makePutTransaction(user: User, card: Card) {
+        Services.loggerService.log("updating_user=${user.id} updating_card=${card.id}")
+        dynamoService.makePutTransaction("Users", user.toDynamoMap(), "Cards", card.toDynamoMap())
     }
 }
 

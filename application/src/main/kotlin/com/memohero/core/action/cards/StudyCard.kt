@@ -25,9 +25,7 @@ class StudyCard(
 
         val user = retrieveUser(cardAnswer.userId) ?: throw UserNotFoundException(cardAnswer.userId)
 
-        cardRepository.update(updatedCard)
-
-        return if(cardAnswer.quality >= 3) gamificationService.grantExp(user, card.category)
+        return if(cardAnswer.quality >= 3) gamificationService.grantExp(user, updatedCard)
         else gamificationService.applyDamage(user)
     }
 

@@ -15,12 +15,12 @@ class GetUserByIDTest {
     private val user = getRandomUser()
 
     @BeforeEach
-    internal fun setUp() {
+    internal suspend fun setUp() {
         whenever(mockedRepository.getById(user.id)).thenReturn(user)
     }
 
     @Test
-    fun `should return an user by its id`() {
+    suspend fun `should return an user by its id`() {
         val getUserById = GetUserByID(mockedRepository)
 
         val resultUser = getUserById(user.id)
@@ -29,7 +29,7 @@ class GetUserByIDTest {
     }
 
     @Test
-    fun `should throw an exception when the user is not found`() {
+    suspend fun `should throw an exception when the user is not found`() {
         val getUserById = GetUserByID(mockedRepository)
 
         assertThrows<UserNotFoundException> {

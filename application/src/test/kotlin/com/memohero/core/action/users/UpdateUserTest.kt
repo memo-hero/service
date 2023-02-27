@@ -17,12 +17,12 @@ class UpdateUserTest {
     private val randomUser = getRandomUser()
 
     @BeforeEach
-    internal fun setUp() {
+    internal suspend fun setUp() {
         whenever(mockedUserRepository.checkUserExists(randomUser)).thenReturn(true)
     }
 
     @Test
-    fun `should validate the existence of the user`() {
+    suspend fun `should validate the existence of the user`() {
         val updateUserAction = UpdateUser(mockedUserRepository)
 
         updateUserAction(randomUser)
@@ -31,7 +31,7 @@ class UpdateUserTest {
     }
 
     @Test
-    fun `should throw exception if the user is not found`() {
+    suspend fun `should throw exception if the user is not found`() {
         val updateUserAction = UpdateUser(mockedUserRepository)
 
         assertThrows<UserNotFoundException> {
