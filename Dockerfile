@@ -12,6 +12,6 @@ RUN ./gradlew shadowJar
 #####################
 FROM eclipse-temurin
 EXPOSE 8282
-COPY --from=builder /application/build/libs/memohero-1.1.3-all.jar .
+COPY --from=builder /application/build/libs/memohero-1.1.4-all.jar .
 WORKDIR /
-CMD java -jar ./memohero-1.1.3-all.jar
+CMD java -jar ./memohero-1.1.4-all.jar

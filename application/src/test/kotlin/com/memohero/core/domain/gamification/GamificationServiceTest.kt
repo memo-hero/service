@@ -23,7 +23,6 @@ class GamificationServiceTest {
     @ParameterizedTest
     @MethodSource("levelAndExp")
     suspend fun `should properly assign exp and leveling`(currentLevel: Int, currentExp: Int, gamificationResult: GamificationResult) {
-//        val studiedCategory = Category.ARTS
         val user = getUserWithSpecifiedExp(category = randomCard.category, exp = currentExp, level = currentLevel)
 
         val result = gamificationService.grantExp(user = user, updatedCard = randomCard)
