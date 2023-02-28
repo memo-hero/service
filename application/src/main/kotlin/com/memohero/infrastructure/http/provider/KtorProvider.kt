@@ -62,6 +62,7 @@ object KtorProvider {
                 val userId = call.parameters["user_id"] ?: throw InvalidParameterException("Missing parameter userId")
                 val logs = call.receive<List<Log>>()
                 pushLogsActions(userId, logs)
+                call.response.status(HttpStatusCode.OK)
             }
             catch (ex: Exception) {
                 val message = "${ ex.message ?: "Error when pushing logs" } stacktrace=${ ex.stackTraceToString() }"
