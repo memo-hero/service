@@ -34,7 +34,7 @@ fun Route.updateUser(updateUserAction: UpdateUser) {
         }
         catch (ex: UserNotFoundException) {
             Services.loggerService.log(ex.message!!, LogSeverity.WARNING)
-            call.response.status(HttpStatusCode.BadRequest)
+            call.response.status(HttpStatusCode.NotFound)
             call.respond(ex.message)
         }
         catch (ex: Exception) {
@@ -49,12 +49,13 @@ fun Route.createUser(createUserAction: CreateUser) {
     post(Path.CREATE_USER) {
         try {
             Services.loggerService.log(call.request.toLogString())
-            val user = call.receive<CreateUserJson>()
-            createUserAction(user.toUser())
+            val userId = call.parameters["user_id"] ?: throw InvalidParameterException("Missing parameter userId")
+            val newUser = CreateUserJson(userId).toUser()
+            createUserAction(newUser)
 
             logResponse(call)
             call.response.status(HttpStatusCode.OK)
-            call.respond(user.toUser())
+            call.respond(newUser)
         }
         catch (ex: UserAlreadyExistsException) {
             Services.loggerService.log(ex.message!!, LogSeverity.WARNING)

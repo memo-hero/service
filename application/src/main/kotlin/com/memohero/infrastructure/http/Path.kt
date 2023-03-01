@@ -4,7 +4,7 @@ object Path {
     const val GET_VERSION = "/version"
     const val PUSH_LOGS = "/users/{user_id}/logs"
 
-    const val CREATE_USER = "/users"
+    const val CREATE_USER = "/users/{user_id}"
     const val GET_USER_BY_ID = "/users/{user_id}"
     const val UPDATE_USER = "/users/{user_id}"
 
