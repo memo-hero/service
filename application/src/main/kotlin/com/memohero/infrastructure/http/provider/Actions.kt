@@ -16,11 +16,17 @@ object Actions {
     }
 
     val storeCard by lazy {
-        StoreCard(Repositories.cardRepository)
+        StoreCard(
+            Repositories.userRepository,
+            Repositories.cardRepository,
+        )
     }
 
     val updateCard by lazy {
-        UpdateCard(Repositories.cardRepository)
+        UpdateCard(
+            Repositories.userRepository,
+            Repositories.cardRepository,
+        )
     }
 
     val getCards by lazy {
@@ -41,7 +47,10 @@ object Actions {
     }
 
     val getCardById by lazy {
-        GetCardById(Repositories.cardRepository)
+        GetCardById(
+            Repositories.userRepository,
+            Repositories.cardRepository,
+        )
     }
 
     val getCardsByTag by lazy {
@@ -49,7 +58,10 @@ object Actions {
     }
 
     val deleteCard by lazy {
-        DeleteCard(Repositories.cardRepository)
+        DeleteCard(
+            Repositories.userRepository,
+            Repositories.cardRepository,
+        )
     }
 
     val createUser by lazy {

@@ -33,6 +33,11 @@ class DynamoUserRepository(
         return getById(user.id) != null
     }
 
+    override suspend fun checkUserExists(userId: String): Boolean {
+        Services.loggerService.log("checking_if_user_exists=${userId}")
+        return getById(userId) != null
+    }
+
     override suspend fun updateUser(user: User) {
         Services.loggerService.log("updating_user=${user.id}")
         dynamoService.dynamoPutItemRequest(dbTableName, user.toDynamoMap())

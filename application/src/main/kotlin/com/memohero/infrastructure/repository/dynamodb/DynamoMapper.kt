@@ -1,6 +1,7 @@
 package com.memohero.infrastructure.repository.dynamodb
 
 import aws.sdk.kotlin.services.dynamodb.model.*
+import aws.smithy.kotlin.runtime.util.length
 import com.memohero.core.domain.card.Card
 import com.memohero.core.domain.card.CardStudyMetadata
 import com.memohero.core.domain.user.Category
@@ -77,7 +78,7 @@ object DynamoMapper {
     }
 
     fun ExecuteStatementResponse.toCard(): Card? {
-        return if (this.items == null) null
+        return if (this.items?.length == 0 || this.items == null) null
         else this.items!![0].toCard()
     }
 

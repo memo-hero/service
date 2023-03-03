@@ -17,6 +17,9 @@ class InMemoryUserRepository: UserRepository {
     override suspend fun checkUserExists(user: User)
         = getById(user.id) != null
 
+    override suspend fun checkUserExists(userId: String)
+        = storedUsers.firstOrNull { it.id == userId } != null
+
     override suspend fun updateUser(user: User) {
         storedUsers.remove(getById(user.id))
         storedUsers.add(user)
