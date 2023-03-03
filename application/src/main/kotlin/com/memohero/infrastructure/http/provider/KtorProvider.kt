@@ -30,7 +30,7 @@ object KtorProvider {
             routing {
                 getVersion(Actions.getVersion)
                 pushLogs(Actions.pushLogs)
-                swaggerUI(path = "swagger", swaggerFile = "openapi/swagger.yml")
+                swaggerUI(path = "api")
 
                 storeCard(Actions.storeCard)
                 updateCard(Actions.updateCard)
