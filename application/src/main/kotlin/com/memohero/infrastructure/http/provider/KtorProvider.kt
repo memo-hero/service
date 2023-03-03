@@ -15,7 +15,6 @@ import io.ktor.server.engine.*
 import io.ktor.server.logging.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.plugins.swagger.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -30,7 +29,6 @@ object KtorProvider {
             routing {
                 getVersion(Actions.getVersion)
                 pushLogs(Actions.pushLogs)
-                swaggerUI(path = "api")
 
                 storeCard(Actions.storeCard)
                 updateCard(Actions.updateCard)

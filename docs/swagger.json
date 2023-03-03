@@ -1,0 +1,1342 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MemoHero",
+    "version": "1.1.8"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    },
+    {
+      "url": "http://192.168.100.75:8282"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Card"
+    },
+    {
+      "name": "System"
+    },
+    {
+      "name": "Study"
+    }
+  ],
+  "paths": {
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get User By ID",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/user"
+          },
+          "404": {
+            "$ref": "#/components/responses/user_not_found"
+          }
+        },
+        "description": "Gets an user by its ID",
+        "parameters": []
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/user_id"
+        }
+      ],
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update User",
+        "operationId": "put-users-user_id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "$ref": "#/components/responses/user_not_found"
+          }
+        },
+        "description": "Updates an user by it's id",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/updated_user"
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create User",
+        "operationId": "post-users-user_id",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/user"
+          }
+        },
+        "description": "Creates a new user"
+      }
+    },
+    "/users/{user_id}/cards": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Create Card",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/card"
+          },
+          "404": {
+            "$ref": "#/components/responses/user_not_found"
+          }
+        },
+        "description": "Creates a new card for the given user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/new_card"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/user_id"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Get user's cards",
+        "operationId": "get-users-user_id-cards",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/card_list"
+          },
+          "404": {
+            "$ref": "#/components/responses/user_not_found"
+          }
+        },
+        "description": "Get a user's cards"
+      }
+    },
+    "/users/{user_id}/cards/{card_id}": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Get Card By ID",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/card"
+          },
+          "404": {
+            "$ref": "#/components/responses/user_not_found"
+          }
+        },
+        "description": "Gets a card by its ID"
+      },
+      "put": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Update Card",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/user_not_found"
+          }
+        },
+        "description": "Updates the given card",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/card"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/user_id"
+        },
+        {
+          "$ref": "#/components/parameters/card_id"
+        }
+      ],
+      "delete": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Delete Card",
+        "operationId": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/card_not_found"
+          }
+        },
+        "description": "Deletes the given card"
+      }
+    },
+    "/users/{user_id}/cards/due": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "summary": "Get Due Cards",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/card_list"
+          },
+          "404": {
+            "$ref": "#/components/responses/user_not_found"
+          }
+        },
+        "description": "Gets all the due cards for the given user"
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/user_id"
+        }
+      ]
+    },
+    "/version": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Version",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Example 1": {
+                    "value": "1.0.0"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Gets the service version"
+      }
+    },
+    "/healthz": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Health Check",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example 1": {
+                    "value": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns 200 if the service is up and running"
+      }
+    },
+    "/users/{user_id}/logs": {
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Push Logs",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/user_not_found"
+          }
+        },
+        "description": "Receives and stores the logs of a client application",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/log_list"
+        }
+      }
+    },
+    "/users/{user_id}/cards/{card_id}/study": {
+      "post": {
+        "tags": [
+          "Study"
+        ],
+        "summary": "Study Card",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/study_quality"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/study_response"
+          },
+          "404": {
+            "$ref": "#/components/responses/card_not_found"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/user_id"
+        },
+        {
+          "$ref": "#/components/parameters/card_id"
+        }
+      ]
+    }
+  },
+  "components": {
+    "responses": {
+      "user": {
+        "description": "User Response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "stats": {
+                  "type": "object",
+                  "properties": {
+                    "health": {
+                      "type": "integer"
+                    },
+                    "categories": {
+                      "type": "object",
+                      "properties": {
+                        "ARTS": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "needed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "COMPUTERS": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "needed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "HISTORY": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "needed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "LANGUAGES": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "needed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "SCIENCE": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "needed": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "generalLevel": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "x-examples": {
+                "Example 1": {
+                  "id": "user_id",
+                  "stats": {
+                    "health": 100,
+                    "categories": {
+                      "ARTS": {
+                        "level": 1,
+                        "exp": 1,
+                        "needed": 75
+                      },
+                      "COMPUTERS": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "HISTORY": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "LANGUAGES": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "SCIENCE": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      }
+                    },
+                    "generalLevel": 1
+                  }
+                }
+              }
+            },
+            "examples": {
+              "New user created": {
+                "value": {
+                  "id": "user_id",
+                  "stats": {
+                    "health": 100,
+                    "categories": {
+                      "ARTS": {
+                        "level": 1,
+                        "exp": 1,
+                        "needed": 75
+                      },
+                      "COMPUTERS": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "HISTORY": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "LANGUAGES": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "SCIENCE": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      }
+                    },
+                    "generalLevel": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "user_not_found": {
+        "description": "Example response",
+        "content": {
+          "text/plain": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            },
+            "examples": {
+              "User ID not found": {
+                "value": "User with id {user_id} was not found."
+              }
+            }
+          }
+        }
+      },
+      "card_list": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "userId": {
+                    "type": "string"
+                  },
+                  "front": {
+                    "type": "string"
+                  },
+                  "back": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "dueDate": {
+                    "type": "integer"
+                  },
+                  "studyMetadata": {
+                    "type": "object",
+                    "properties": {
+                      "repetition": {
+                        "type": "integer"
+                      },
+                      "easeFactor": {
+                        "type": "number"
+                      },
+                      "interval": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              },
+              "x-examples": {
+                "Example 1": [
+                  {
+                    "id": "card_id",
+                    "userId": "user_id",
+                    "front": "test front",
+                    "back": "test back",
+                    "category": "ARTS",
+                    "tags": [
+                      "tag 1",
+                      "tag 2"
+                    ],
+                    "dueDate": 19416,
+                    "studyMetadata": {
+                      "repetition": 0,
+                      "easeFactor": 2.5,
+                      "interval": 0
+                    }
+                  }
+                ]
+              }
+            },
+            "examples": {
+              "List of an user's cards": {
+                "value": [
+                  {
+                    "id": "card_id",
+                    "userId": "user_id",
+                    "front": "test front",
+                    "back": "test back",
+                    "category": "ARTS",
+                    "tags": [
+                      "tag 1",
+                      "tag 2"
+                    ],
+                    "dueDate": 19416,
+                    "studyMetadata": {
+                      "repetition": 0,
+                      "easeFactor": 2.5,
+                      "interval": 0
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "card": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "userId": {
+                  "type": "string"
+                },
+                "front": {
+                  "type": "string"
+                },
+                "back": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "dueDate": {
+                  "type": "integer"
+                },
+                "studyMetadata": {
+                  "type": "object",
+                  "properties": {
+                    "repetition": {
+                      "type": "integer"
+                    },
+                    "easeFactor": {
+                      "type": "number"
+                    },
+                    "interval": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "x-examples": {
+                "Example 1": {
+                  "id": "card_id",
+                  "userId": "user_id",
+                  "front": "test front",
+                  "back": "test back",
+                  "category": "ARTS",
+                  "tags": [
+                    "tag 1",
+                    "tag 2"
+                  ],
+                  "dueDate": 19416,
+                  "studyMetadata": {
+                    "repetition": 0,
+                    "easeFactor": 2.5,
+                    "interval": 0
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Card": {
+                "value": {
+                  "id": "card_id",
+                  "userId": "user_id",
+                  "front": "test front",
+                  "back": "test back",
+                  "category": "ARTS",
+                  "tags": [
+                    "tag 1",
+                    "tag 2"
+                  ],
+                  "dueDate": 19416,
+                  "studyMetadata": {
+                    "repetition": 0,
+                    "easeFactor": 2.5,
+                    "interval": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "card_not_found": {
+        "description": "Example response",
+        "content": {
+          "text/plain": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            },
+            "examples": {
+              "Card ID not found": {
+                "value": "User with id {user_id} was not found."
+              }
+            }
+          }
+        }
+      },
+      "study_response": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "didLevelUp": {
+                  "type": "boolean"
+                },
+                "didGetKnockedOut": {
+                  "type": "boolean"
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "ARTS": {
+                      "type": "object",
+                      "properties": {
+                        "level": {
+                          "type": "integer"
+                        },
+                        "exp": {
+                          "type": "integer"
+                        },
+                        "needed": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "userStats": {
+                  "type": "object",
+                  "properties": {
+                    "health": {
+                      "type": "integer"
+                    },
+                    "categories": {
+                      "type": "object",
+                      "properties": {
+                        "ARTS": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "needed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "COMPUTERS": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "needed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "HISTORY": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "needed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "LANGUAGES": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "needed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "SCIENCE": {
+                          "type": "object",
+                          "properties": {
+                            "level": {
+                              "type": "integer"
+                            },
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "needed": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "generalLevel": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "x-examples": {
+                "Example 1": {
+                  "didLevelUp": false,
+                  "didGetKnockedOut": false,
+                  "category": {
+                    "ARTS": {
+                      "level": 1,
+                      "exp": 10,
+                      "needed": 75
+                    }
+                  },
+                  "userStats": {
+                    "health": 100,
+                    "categories": {
+                      "ARTS": {
+                        "level": 1,
+                        "exp": 10,
+                        "needed": 75
+                      },
+                      "COMPUTERS": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "HISTORY": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "LANGUAGES": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "SCIENCE": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      }
+                    },
+                    "generalLevel": 1
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Study response": {
+                "value": {
+                  "didLevelUp": false,
+                  "didGetKnockedOut": false,
+                  "category": {
+                    "ARTS": {
+                      "level": 1,
+                      "exp": 10,
+                      "needed": 75
+                    }
+                  },
+                  "userStats": {
+                    "health": 100,
+                    "categories": {
+                      "ARTS": {
+                        "level": 1,
+                        "exp": 10,
+                        "needed": 75
+                      },
+                      "COMPUTERS": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "HISTORY": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "LANGUAGES": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      },
+                      "SCIENCE": {
+                        "level": 1,
+                        "exp": 0,
+                        "needed": 75
+                      }
+                    },
+                    "generalLevel": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "updated_user": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "stats": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "object",
+                      "properties": {
+                        "ARTS": {
+                          "type": "object",
+                          "properties": {
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "level": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "COMPUTERS": {
+                          "type": "object",
+                          "properties": {
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "level": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "HISTORY": {
+                          "type": "object",
+                          "properties": {
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "level": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "LANGUAGES": {
+                          "type": "object",
+                          "properties": {
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "level": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "SCIENCE": {
+                          "type": "object",
+                          "properties": {
+                            "exp": {
+                              "type": "integer"
+                            },
+                            "level": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "health": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "x-examples": {
+                "Example 1": {
+                  "stats": {
+                    "categories": {
+                      "ARTS": {
+                        "exp": 1,
+                        "level": 1
+                      },
+                      "COMPUTERS": {
+                        "exp": 0,
+                        "level": 1
+                      },
+                      "HISTORY": {
+                        "exp": 0,
+                        "level": 1
+                      },
+                      "LANGUAGES": {
+                        "exp": 0,
+                        "level": 1
+                      },
+                      "SCIENCE": {
+                        "exp": 0,
+                        "level": 1
+                      }
+                    },
+                    "health": 100
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Example 1": {
+                "value": {
+                  "stats": {
+                    "categories": {
+                      "ARTS": {
+                        "exp": 1,
+                        "level": 1
+                      },
+                      "COMPUTERS": {
+                        "exp": 0,
+                        "level": 1
+                      },
+                      "HISTORY": {
+                        "exp": 0,
+                        "level": 1
+                      },
+                      "LANGUAGES": {
+                        "exp": 0,
+                        "level": 1
+                      },
+                      "SCIENCE": {
+                        "exp": 0,
+                        "level": 1
+                      }
+                    },
+                    "health": 100
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "new_card": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "front": {
+                  "type": "string"
+                },
+                "back": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "x-examples": {
+                "Example 1": {
+                  "front": "test front",
+                  "back": "test back",
+                  "category": "ARTS",
+                  "tags": [
+                    "tag 1",
+                    "tag 2"
+                  ]
+                }
+              }
+            },
+            "examples": {
+              "Example 1": {
+                "value": {
+                  "front": "test front",
+                  "back": "test back",
+                  "category": "ARTS",
+                  "tags": [
+                    "tag 1",
+                    "tag 2"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "card": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "userId": {
+                  "type": "string"
+                },
+                "front": {
+                  "type": "string"
+                },
+                "back": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "dueDate": {
+                  "type": "integer"
+                },
+                "studyMetadata": {
+                  "type": "object",
+                  "properties": {
+                    "repetition": {
+                      "type": "integer"
+                    },
+                    "easeFactor": {
+                      "type": "number"
+                    },
+                    "interval": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              "x-examples": {
+                "Example 1": {
+                  "id": "card_id",
+                  "userId": "test2",
+                  "front": "test front",
+                  "back": "test back",
+                  "category": "ARTS",
+                  "tags": [
+                    "tag 1",
+                    "tag 2"
+                  ],
+                  "dueDate": 19416,
+                  "studyMetadata": {
+                    "repetition": 0,
+                    "easeFactor": 2.5,
+                    "interval": 0
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Example 1": {
+                "value": {
+                  "id": "card_id",
+                  "userId": "test2",
+                  "front": "test front",
+                  "back": "test back",
+                  "category": "ARTS",
+                  "tags": [
+                    "tag 1",
+                    "tag 2"
+                  ],
+                  "dueDate": 19416,
+                  "studyMetadata": {
+                    "repetition": 0,
+                    "easeFactor": 2.5,
+                    "interval": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "log_list": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "type": "integer"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "type": "string"
+                  },
+                  "severity": {
+                    "type": "string"
+                  }
+                }
+              },
+              "x-examples": {
+                "Example 1": [
+                  {
+                    "timestamp": 1677632767765000000,
+                    "message": "app_version=1.1.0.0 User google-oauth2|117961574608013003821 logged in.",
+                    "source": "MEMOHERO_DESKTOP",
+                    "severity": "INFO"
+                  },
+                  {
+                    "timestamp": 1677632768353000000,
+                    "message": "app_version=1.1.0.0 Getting due cards from server...",
+                    "source": "MEMOHERO_DESKTOP",
+                    "severity": "INFO"
+                  },
+                  {
+                    "timestamp": 1677632828190000000,
+                    "message": "app_version=1.1.0.0 User google-oauth2|117961574608013003821 logged out.",
+                    "source": "MEMOHERO_DESKTOP",
+                    "severity": "INFO"
+                  },
+                  {
+                    "timestamp": 1677632828226000000,
+                    "message": "app_version=1.1.0.0 Pushing logs to server...",
+                    "source": "MEMOHERO_DESKTOP",
+                    "severity": "INFO"
+                  }
+                ]
+              }
+            },
+            "examples": {
+              "A list of logs": {
+                "value": [
+                  {
+                    "timestamp": 1677632767765000000,
+                    "message": "app_version=1.1.0.0 User google-oauth2|117961574608013003821 logged in.",
+                    "source": "MEMOHERO_DESKTOP",
+                    "severity": "INFO"
+                  },
+                  {
+                    "timestamp": 1677632768353000000,
+                    "message": "app_version=1.1.0.0 Getting due cards from server...",
+                    "source": "MEMOHERO_DESKTOP",
+                    "severity": "INFO"
+                  },
+                  {
+                    "timestamp": 1677632828190000000,
+                    "message": "app_version=1.1.0.0 User google-oauth2|117961574608013003821 logged out.",
+                    "source": "MEMOHERO_DESKTOP",
+                    "severity": "INFO"
+                  },
+                  {
+                    "timestamp": 1677632828226000000,
+                    "message": "app_version=1.1.0.0 Pushing logs to server...",
+                    "source": "MEMOHERO_DESKTOP",
+                    "severity": "INFO"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    },
+    "schemas": {},
+    "parameters": {
+      "user_id": {
+        "name": "user_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Id of the user"
+      },
+      "card_id": {
+        "name": "card_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Id of the card"
+      },
+      "study_quality": {
+        "name": "quality",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "The user's response for the card"
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@ apply plugin: 'kotlin'
 apply plugin: 'application'
 
 group 'com.memohero.service'
-version '1.1.7'
+version '1.1.8'
 mainClassName = "com.memohero.infrastructure.http.Application"
 
 sourceSets {
@@ -41,7 +41,6 @@ dependencies {
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-core-jvm:$ktor_version"
     implementation "io.ktor:ktor-client-apache:$ktor_version"
-    implementation "io.ktor:ktor-server-swagger:2.2.1"
     implementation "io.ktor:ktor-server-content-negotiation:$ktor_version"
     implementation "io.ktor:ktor-serialization-jackson:$ktor_version"
     implementation 'junit:junit:4.13.1'
