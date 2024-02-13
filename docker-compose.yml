@@ -5,9 +5,3 @@ services:
         build: .
         ports:
             - "8280:8280"
-networks:
-  lan:
-    name: lan
-    driver: macvlan
-    driver_opts:
-      parent: eth0 #your ethernet interface
